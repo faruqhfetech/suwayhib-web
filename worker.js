@@ -16,16 +16,30 @@ const SR = 16000;
 const say = (text) => postMessage({ t: "progress", text });
 
 // ---------- the model (sherpa-onnx, WebAssembly) ----------
+// Its data file (our model + tokens) is stored in parts (build.py); join them, then hand the
+// whole to sherpa's loader instead of letting it fetch one big file.
 let rec = null, stream = null, emitted = 0;
-const sherpaReady = new Promise((resolve, reject) => {
+async function fetchModel() {
+  const { parts, size } = await (await fetch("sherpa/parts.json")).json();
+  const data = new Uint8Array(size);
+  let at = 0;
+  for (const p of parts) {
+    const b = new Uint8Array(await (await fetch("sherpa/" + p)).arrayBuffer());
+    data.set(b, at); at += b.length;
+    say(`Downloading the recitation model… ${Math.round(100 * at / size)}%`);
+  }
+  if (at !== size) throw new Error("the model download was incomplete");
+  return data.buffer;
+}
+const sherpaReady = fetchModel().then((buf) => new Promise((resolve, reject) => {
   self.Module = {
     locateFile: (p) => "sherpa/" + p,
-    setStatus: (s) => { const m = /\((\d+)\/(\d+)\)/.exec(s || ""); if (m) say(`Downloading the recitation model… ${Math.round(100 * m[1] / m[2])}%`); },
+    getPreloadedPackage: () => buf,
     onRuntimeInitialized: resolve,
     onAbort: reject,
   };
-});
-importScripts("sherpa/sherpa-onnx-wasm-main-asr.js", "sherpa/sherpa-onnx-asr.js");
+  importScripts("sherpa/sherpa-onnx-wasm-main-asr.js", "sherpa/sherpa-onnx-asr.js");
+}));
 
 function makeRecognizer() {
   return createOnlineRecognizer(self.Module, {
