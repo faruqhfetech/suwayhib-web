@@ -1,0 +1,296 @@
+/* Suwayhib. One small design system:
+   spacing --s1..--s6 (4 8 12 16 24 32), radius --r-sm/md/lg (8 12 16), UI type 13/14/16/20,
+   buttons: primary (filled accent), default (tonal), .ghost (text only), .icon-btn (square, icon).
+   Word colours (--ok/--slight/--err/--cur) are only for marking words; the brand accent is separate. */
+:root {
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+  --tap: 48px;
+  --bg: #f6f3ec; --card: #fffdf8; --surface-2: #efeadf; --ink: #1f2420; --muted: #565c56; --line: #e3ddcf;
+  --accent: #1d5c63; --on-accent: #ffffff; --accent-soft: #dcebec;
+  --ok: #2f7d4f; --ok-bg: #e5f2ea; --err: #b3261e; --err-bg: #fbe3e1; --cur: #2c6bc9; --cur-bg: #e3edfb;
+  --slight: #7a4a00; --slight-bg: #fbeed5;
+  --shadow: 0 1px 2px rgba(0,0,0,.06), 0 6px 24px rgba(0,0,0,.06);
+  --quran: "Amiri Quran", "Amiri", "KFGQPC Uthmanic Script HAFS", "Scheherazade New", "Traditional Arabic", "Noto Naskh Arabic", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131614; --card: #1b1f1c; --surface-2: #252a26; --ink: #e9ece8; --muted: #a3aca4; --line: #2f3530;
+    --accent: #2f8089; --on-accent: #ffffff; --accent-soft: #1d3436;
+    --ok: #7fcf9c; --ok-bg: #1d3326; --err: #ff8f85; --err-bg: #3d1f1c; --cur: #8db8ff; --cur-bg: #1d2a40;
+    --slight: #e8b85a; --slight-bg: #3a2f17;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 24px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131614; --card: #1b1f1c; --surface-2: #252a26; --ink: #e9ece8; --muted: #a3aca4; --line: #2f3530;
+  --accent: #2f8089; --on-accent: #ffffff; --accent-soft: #1d3436;
+  --ok: #7fcf9c; --ok-bg: #1d3326; --err: #ff8f85; --err-bg: #3d1f1c; --cur: #8db8ff; --cur-bg: #1d2a40;
+  --slight: #e8b85a; --slight-bg: #3a2f17;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 24px rgba(0,0,0,.3);
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+/* --- icons and buttons --- */
+.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+button, .filebtn { font: inherit; display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-height: var(--tap); min-width: var(--tap); padding: var(--s2) var(--s4); border: 0; border-radius: var(--r-md);
+  background: var(--surface-2); color: var(--ink); cursor: pointer; }
+button:disabled { opacity: .45; cursor: default; }
+button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button.primary { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+button.ghost, .filebtn.ghost { background: none; }
+button.wide { display: flex; width: 100%; }
+.icon-btn { padding: 0; width: var(--tap); }
+.linkish { background: none; color: var(--accent); min-height: 40px; padding: 0 var(--s2); }
+.filebtn input { display: none; }
+select, input[type=number], .dialog input { font: inherit; min-height: var(--tap); padding: 0 var(--s3); border: 1px solid var(--line);
+  border-radius: var(--r-md); background: var(--card); color: var(--ink); min-width: 0; }
+
+/* segmented control: tonal track, the chosen option raised */
+.seg { display: inline-flex; padding: 3px; gap: 3px; background: var(--surface-2); border-radius: var(--r-md); flex: none; max-width: 100%; }
+.seg.wide { display: flex; width: 100%; }
+.seg button { flex: 1; min-height: 42px; padding: 0 var(--s3); border-radius: 9px; background: none; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+
+/* number with − / + either side (the number can also be typed) */
+.stepper { display: inline-flex; align-items: center; gap: var(--s2); }
+.stepper input, .stepper b { width: 64px; text-align: center; font-size: 18px; font-weight: 600; padding: 0; }
+.stepper b { display: inline-block; }
+
+/* --- header --- */
+header { position: sticky; top: 0; z-index: 5; display: flex; gap: var(--s1); align-items: center;
+  padding: var(--s1) var(--s3); background: var(--bg); border-bottom: 1px solid var(--line); min-height: 56px; }
+.brand { font-weight: 650; margin-inline-end: var(--s2); }
+.pill { padding: var(--s1) var(--s3); border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 14px;
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.spacer { flex: 1; }
+#lag { color: var(--muted); font-size: 13px; }
+body:not(.reading) #readopts-btn { display: none; }  /* reading options belong to Read */
+#readopts-btn[aria-expanded="true"] { background: var(--accent-soft); color: var(--accent); }
+
+/* Read options: a fold-out strip under the header */
+.readopts { background: var(--card); border-bottom: 1px solid var(--line); padding: var(--s3) var(--s4); display: grid; gap: var(--s2);
+  position: sticky; top: 56px; z-index: 4; box-shadow: var(--shadow); }  /* pinned under the header: visible wherever the scroll is */
+body.paged.reading .readopts { position: static; flex: none; box-shadow: none; }
+.optrow { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; }
+.optlabel { color: var(--muted); font-size: 14px; min-width: 5.5em; }
+.mcap { color: var(--muted); font-size: 13px; }
+
+/* the menu: app-wide settings */
+.menu { position: absolute; inset-inline-end: var(--s3); top: 60px; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); box-shadow: var(--shadow); padding: var(--s2); display: none; flex-direction: column; z-index: 20; min-width: 240px; }
+.menu.show { display: flex; }
+.menu button, .menu .filebtn { justify-content: flex-start; text-align: start; }
+.menurow { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: var(--s1) var(--s1) var(--s1) var(--s3); flex-wrap: wrap; }
+
+/* memorise: words stay hidden (or show only first/last words) until recited */
+body.hz-hide #pages .w:not(.ok):not(.err):not(.slight):not(.peek),
+body.hz-first #pages .w:not(.ok):not(.err):not(.slight):not(.peek):not(.first),
+body.hz-ends #pages .w:not(.ok):not(.err):not(.slight):not(.peek):not(.first):not(.last) { color: transparent; background: var(--surface-2); }
+.w.peek { outline: 1px dashed var(--muted); }
+
+/* --- the mushaf --- */
+main { max-width: 860px; margin: var(--s3) auto 170px; padding: 0 var(--s3); }
+.page { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow);
+  padding: var(--s4) var(--s5); margin-bottom: var(--s4); }
+.page:not(.loaded) { min-height: 70vh; background: repeating-linear-gradient(var(--card) 0 34px, var(--surface-2) 34px 46px); }
+.page-head { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; margin-bottom: var(--s2); }
+
+/* page mode: right to left like a mushaf, one page at a time, each page's text sized to fit the
+   screen (no scrolling inside a page: a swipe always turns the page) */
+#pages.paged { display: flex; gap: var(--s4); overflow-x: auto; overflow-y: hidden; direction: rtl;
+  scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+#pages.paged::-webkit-scrollbar { display: none; }
+#pages.paged .page { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; direction: ltr;
+  height: 100%; overflow: hidden; margin-bottom: 0; display: flex; flex-direction: column; padding: var(--s3) var(--s4) var(--s2); }
+#pages.paged .page .quran { flex: 1; min-height: 0; line-height: 2.05; overflow: hidden; }
+#pages.paged .page:not(.loaded) { min-height: 0; }
+body.paged.reading { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+body.paged.reading header { flex: none; position: static; }
+body.paged.reading main { flex: 1; min-height: 0; display: flex; flex-direction: column; width: 100%; margin: var(--s2) auto; }
+body.paged.reading #pages { flex: 1; min-height: 0; }
+body.paged.reading .bar { position: static; flex: none; }
+body.paged.reading .tabbar { position: static; flex: none; order: 99; }
+
+/* --- the text --- */
+.quran { direction: rtl; text-align: justify; text-align-last: center; user-select: none; touch-action: manipulation;
+  font-family: var(--quran); font-size: clamp(24px, 6.2vw, 32px); line-height: 2.2; }
+.basmala { display: block; text-align: center; }
+.surah { display: block; text-align: center; margin: var(--s2) 0; padding: var(--s1) 0; border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line); font-size: .8em; color: var(--accent); }
+.v { border-radius: var(--r-sm); padding: 2px 0; transition: background .3s; }
+.v.current { background: var(--surface-2); }
+.w { border-radius: 6px; padding: 0 2px; transition: color .25s, background .25s; cursor: pointer; }
+.w.ok { color: var(--ok); }
+.w.cur { background: var(--cur-bg); box-shadow: inset 0 -2px 0 var(--cur); }
+/* a shape as well as a colour (colour-blind learners, bright sun): wavy = check, dotted = tajweed */
+.w.err { background: var(--err-bg); color: var(--err); text-decoration: underline wavy var(--err); text-decoration-thickness: 2px; text-underline-offset: 7px; }
+.w.slight { background: var(--slight-bg); color: var(--slight); text-decoration: underline dotted var(--slight); text-decoration-thickness: 3px; text-underline-offset: 7px; }
+.w.flash { animation: flash 1.2s ease; }
+@keyframes flash { 0%,100% { background: transparent; } 30% { background: var(--cur-bg); } }
+.num { font-size: .62em; color: var(--muted); margin: -12px -2px; padding: 12px 6px; white-space: nowrap; cursor: pointer; }
+.num.done { color: var(--ok); }
+.num.done::after { content: " ✓"; font-size: .9em; }
+.rep { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); vertical-align: super; margin-inline-start: 2px; }
+
+/* --- Read's bottom bar: page arrows either side of the mic --- */
+.bar { position: fixed; left: 0; right: 0; bottom: calc(57px + env(safe-area-inset-bottom)); z-index: 6; display: flex; align-items: center;
+  justify-content: center; gap: var(--s4); padding: var(--s2) var(--s3); background: var(--bg); border-top: 1px solid var(--line); direction: ltr; }
+.bar .pg { color: var(--muted); font-size: 14px; min-width: 64px; text-align: center; }
+#mic { width: 68px; height: 68px; border-radius: 50%; padding: 0; position: relative; background: var(--accent); color: var(--on-accent); }
+#mic .i { width: 28px; height: 28px; }
+#mic.on { background: var(--cur); }  /* listening: blue, not the red of a mistake */
+#mic::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 3px solid var(--cur);
+  opacity: 0; transform: scale(calc(1 + var(--lvl, 0) * .35)); transition: transform .08s linear; }
+#mic.on::after { opacity: .55; }
+
+/* --- the tab bar: always at the bottom, in thumb reach --- */
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 7; display: flex; background: var(--card);
+  border-top: 1px solid var(--line); padding: 0 0 env(safe-area-inset-bottom); }
+.tabbar button { flex: 1; flex-direction: column; gap: 2px; border-radius: 0; background: none; padding: var(--s1);
+  min-height: 56px; font-size: 13px; color: var(--muted); }
+.tabbar button .i { width: 22px; height: 22px; }
+.tabbar button[aria-pressed="true"] { color: var(--accent); font-weight: 600; box-shadow: inset 0 3px 0 var(--accent); }
+
+/* --- hint and banners: one at a time, at the top of the page --- */
+.hintline { text-align: center; color: var(--muted); font-size: 15px; margin: 0 0 var(--s3); }
+.banner { margin: var(--s2) var(--s3) 0; padding: var(--s3) var(--s4); border-radius: var(--r-md); background: var(--err-bg); color: var(--ink); }
+
+/* --- the word sheet (a red or amber word) --- */
+.sheet { position: fixed; left: 50%; bottom: 150px; transform: translateX(-50%); width: min(560px, calc(100% - 24px));
+  background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--err); border-radius: var(--r-lg);
+  box-shadow: var(--shadow); padding: var(--s3) var(--s4) var(--s2); display: none; z-index: 10; }
+.sheet.slight { border-top-color: var(--slight); }
+.sheet.show { display: block; }
+.sheet.top { bottom: auto; top: 70px; }
+.sheet .top { display: flex; align-items: center; gap: var(--s2); }
+.sheet h3 { margin: 0; font-size: 17px; flex: 1; }
+.sheet .term { color: var(--muted); font-size: 13px; }
+.sheet .word { direction: rtl; text-align: center; font-family: var(--quran); font-size: 42px; margin: var(--s1) 0 var(--s3); }
+.sheet .actions { display: flex; gap: var(--s2); justify-content: center; flex-wrap: wrap; }
+.sheet #showsounds { display: block; margin: var(--s2) auto 0; font-size: 14px; }
+.sheet .sounds { display: none; margin-top: var(--s2); font-size: 14px; color: var(--muted); }
+.sheet .sounds.show { display: block; }
+.sheet .ph { direction: rtl; font-family: "Noto Naskh Arabic", serif; font-size: 17px; overflow-wrap: anywhere; }
+
+/* --- Practise and Repeat: one panel layout --- */
+.panel { display: none; max-width: 640px; margin: var(--s3) auto 0; padding: 0 var(--s3) 96px; }
+body.practising main, body.practising .bar, body.repeating main, body.repeating .bar { display: none; }
+body.practising #practice, body.repeating #repeat { display: block; }
+body.insessions main, body.insessions .bar { display: none; }
+body.insessions #sessions { display: block; }
+.ptitle-en { font-size: 20px; font-weight: 600; }
+.sesslist .sess:last-child { border-bottom: 0; }
+.pcard { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow);
+  padding: var(--s4); display: grid; gap: var(--s3); }
+.phead { display: flex; align-items: center; gap: var(--s2); direction: ltr; }
+.ptitle { flex: 1; text-align: center; }
+.ptitle-ar { font-family: "Amiri", "Noto Naskh Arabic", serif; font-size: 22px; color: var(--accent); direction: rtl; }
+.pmeta { color: var(--muted); font-size: 14px; }
+#pverse, #rverse { font-size: clamp(26px, 6.5vw, 36px); line-height: 2.2; text-align-last: center; }
+#rverse:empty { display: none; }
+.pstep { text-align: center; color: var(--muted); min-height: 1.4em; }
+.pstep:empty { display: none; }
+.pstep.good { color: var(--ok); font-weight: 600; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+/* recite from memory: words stay hidden until they are recited */
+#pverse.hidetext .w:not(.ok):not(.err):not(.slight), #rverse.hidetext .w:not(.ok):not(.err):not(.slight) { color: transparent; background: var(--surface-2); }
+#ptext[aria-pressed="true"], #rtext[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
+.wdots { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; direction: rtl; }
+.wdots:empty { display: none; }
+.wdots i { width: 12px; height: 12px; border-radius: 3px; background: var(--line); }
+.wdots i.ok { background: var(--ok); } .wdots i.slight { background: var(--slight); } .wdots i.err { background: var(--err); }
+.wdots i.cur { outline: 2px solid var(--cur); outline-offset: 1px; }
+.dots3 { display: flex; gap: var(--s2); justify-content: center; }
+.dots3 i { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--line); }
+.dots3 i.used { background: var(--line); }
+details.opts { border-top: 1px solid var(--line); padding-top: var(--s1); }
+details.opts summary { list-style: none; display: flex; align-items: center; gap: var(--s2); min-height: var(--tap); color: var(--muted); cursor: pointer; }
+details.opts summary::-webkit-details-marker { display: none; }
+details.opts[open] summary { color: var(--ink); }
+details.opts > .optrow { margin: var(--s2) 0; }
+#repeat.running .rsetup { display: none !important; }  /* while it runs: the verses, not the settings */
+#rcascc { display: grid; gap: var(--s3); }  /* the two cascade counts: same spacing as every other row */
+.rtally { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--muted); max-height: 9.5em; overflow: auto; }
+.rtally:empty { display: none; }
+.rtally li { padding: 2px 0; }
+.rtally li.err { color: var(--err); } .rtally li.slight { color: var(--slight); } .rtally li.ok { color: var(--ok); }
+.pfoot { text-align: center; color: var(--muted); font-size: 13px; margin: var(--s3) 0 0; }
+
+/* --- dialogs: go to, sessions, yes/no, first-run guide --- */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 30; display: none; align-items: center; justify-content: center; padding: var(--s3); }
+.overlay.show { display: flex; }
+.dialog { background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow); width: min(520px, 100%); max-height: 86dvh;
+  display: flex; flex-direction: column; overflow: hidden; }
+.dialog .head { display: flex; gap: var(--s2); align-items: center; padding: var(--s3); border-bottom: 1px solid var(--line); }
+.dialog .head input { flex: 1; }
+.dialog .list { overflow-y: auto; padding: var(--s2); }
+.dialog .item { display: flex; width: 100%; justify-content: space-between; background: none; text-align: start; gap: var(--s3); }
+.dialog .item:hover { background: var(--surface-2); }
+.dialog .item .ar { font-family: "Amiri", "Noto Naskh Arabic", serif; font-size: 20px; }
+.dialog .item .meta { color: var(--muted); font-size: 14px; }
+.dialog .item .en { flex: 1; color: var(--ink); }
+.tabs { padding: var(--s3) var(--s3) 0; }
+.vstep { padding: var(--s3) var(--s4) var(--s4); }
+.vtitle { margin: var(--s1) 0 var(--s3); } .vtitle .ar { font-family: "Amiri", "Noto Naskh Arabic", serif; font-size: 24px; }
+.vtitle .meta, .vrow .meta { color: var(--muted); }
+.vrow { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s3); }
+.vrow input { width: 110px; }
+.vbtns { display: flex; gap: var(--s2); flex-wrap: wrap; }
+.guide { padding: var(--s5) var(--s4) var(--s4); text-align: center; }
+.guide .icon { color: var(--accent); display: flex; justify-content: center; }
+.guide .icon .i { width: 48px; height: 48px; stroke-width: 1.6; }
+.guide h3 { margin: var(--s2) 0 var(--s1); font-size: 20px; }
+.guide p { margin: 0 0 var(--s3); color: var(--muted); }
+.guide .gnote { font-size: 13px; }  /* the licence's "automatic feedback can be wrong" note */
+.guide .swatches { justify-content: center; margin-bottom: var(--s3); font-size: 15px; }
+.guide .dots { display: flex; justify-content: center; gap: 6px; margin: var(--s1) 0 var(--s3); }
+.guide .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.guide .dots i.on { background: var(--accent); }
+.guide .pctl { display: flex; gap: var(--s2); justify-content: center; flex-wrap: wrap; margin-bottom: var(--s3); }
+.legend { display: flex; gap: var(--s3); flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-inline-end: 5px; vertical-align: -1px; }
+.lg-ok::before { background: var(--ok); } .lg-cur::before { background: var(--cur); }
+.lg-err::before { background: var(--err); } .lg-slight::before { background: var(--slight); }
+
+/* sessions */
+.sesstop { display: flex; gap: var(--s3); align-items: center; justify-content: space-between; flex-wrap: wrap; padding-bottom: var(--s3); border-bottom: 1px solid var(--line); }
+button.danger { color: var(--err); }
+.switch { display: inline-flex; align-items: center; gap: var(--s2); min-height: var(--tap); color: var(--muted); font-size: 14px; }
+.switch input { width: 22px; height: 22px; accent-color: var(--accent); }
+.sess { padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
+.sess .top { display: flex; justify-content: space-between; gap: var(--s2); }
+.sess .kind { font-weight: 600; }
+.sess .when, .sess .range { color: var(--muted); font-size: 14px; }
+.sess .counts { display: flex; gap: var(--s2); margin-top: var(--s1); font-size: 13px; }
+.sess .counts span { padding: 1px var(--s2); border-radius: 999px; }
+.sess .c-ok { background: var(--ok-bg); color: var(--ok); } .sess .c-sl { background: var(--slight-bg); color: var(--slight); } .sess .c-er { background: var(--err-bg); color: var(--err); }
+.sess .acts { display: flex; gap: var(--s2); margin-top: var(--s2); }
+.sessempty { padding: var(--s5); color: var(--muted); text-align: center; }
+.reviewbar { position: fixed; top: 64px; left: 50%; transform: translateX(-50%); z-index: 8; display: none; gap: var(--s2); align-items: center;
+  background: var(--card); border: 1px solid var(--line); border-inline-start: 4px solid var(--accent); border-radius: var(--r-md);
+  box-shadow: var(--shadow); padding: var(--s1) var(--s1) var(--s1) var(--s3); max-width: calc(100% - 24px); }
+.reviewbar.show { display: flex; flex-wrap: wrap; }
+
+/* toast: short notes, same card look as everything else */
+.toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: var(--card); border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent); border-radius: var(--r-md); box-shadow: var(--shadow);
+  padding: var(--s2) var(--s4); font-size: 15px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 40; max-width: calc(100% - 24px); }
+.toast.show { opacity: 1; }
+
+/* the in-browser build (inweb/): no reference recitations, no recordings */
+body.inweb #listen, body.inweb #mine, body.inweb #reviewplay, body.inweb #plisten, body.inweb #pturn,
+body.inweb .switch, body.inweb .optrow:has(#preciter), body.inweb .optrow:has(#preps) { display: none !important; }
+body.inweb .row2:has(#pturn) { grid-template-columns: 1fr; }
+
+@media (max-width: 560px) {
+  .menu { position: fixed; left: 0; right: 0; top: auto; bottom: 0; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 75dvh; overflow-y: auto;
+    padding-bottom: calc(var(--s3) + env(safe-area-inset-bottom)); }  /* the menu as a bottom sheet, in thumb reach */
+  .page { padding: var(--s3); } header { padding: var(--s1) var(--s2); } .brand { display: none; }
+  .bar { gap: var(--s2); }
+  .seg button { padding: 0 var(--s2); }
+}
+@media (prefers-reduced-motion: reduce) { .w, .v, .toast { transition: none; } .w.flash { animation: none; } #mic::after { transition: none; } }

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suwayhib Follow-Along</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<!-- one line-icon set (24px grid, 2px stroke, currentColor); used as <svg class="i"><use href="#i-…"/></svg> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1"/><path d="M12 18v4"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-practise" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></symbol>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <span class="brand">Suwayhib</span>
+  <span class="pill" id="status">Connecting…</span>
+  <span class="spacer"></span>
+  <span id="lag"></span>
+  <button class="icon-btn ghost" id="goto" data-i18n-label="Go to a surah or page" title="Go to a surah or page" aria-label="Go to a surah or page"><svg class="i"><use href="#i-search"/></svg></button>
+  <button class="icon-btn ghost" id="readopts-btn" aria-expanded="false" aria-controls="readopts" data-i18n-label="Reading options" title="Reading options" aria-label="Reading options"><svg class="i"><use href="#i-sliders"/></svg></button>
+  <button class="icon-btn ghost" id="more" data-i18n-label="More" aria-label="More" title="More"><svg class="i"><use href="#i-more"/></svg></button>
+</header>
+
+<!-- Read only: how the mushaf is shown -->
+<div class="readopts" id="readopts" hidden>
+  <div class="optrow"><span class="optlabel" data-i18n="Text">Text</span>
+    <span class="seg" role="group" data-i18n-label="Memorise" aria-label="Memorise"><button id="hz-off" aria-pressed="true" data-i18n="Shown">Shown</button><button id="hz-first" aria-pressed="false" data-i18n="First word">First word</button><button id="hz-ends" aria-pressed="false" data-i18n="First + last">First + last</button><button id="hz-hide" aria-pressed="false" data-i18n="Hidden">Hidden</button></span></div>
+  <div class="mcap" id="hzcap"></div>
+  <div class="optrow"><span class="optlabel" data-i18n="View">View</span>
+    <span class="seg" role="group" data-i18n-label="Layout" aria-label="Layout"><button id="lay-pages" aria-pressed="false" data-i18n="Pages">Pages</button><button id="lay-scroll" aria-pressed="true" data-i18n="Scroll">Scroll</button></span>
+    <button class="ghost" id="reset" data-i18n="Clear all colours">Clear all colours</button></div>
+</div>
+
+<!-- the menu: app-wide settings only -->
+<div class="menu" id="menu">
+  <div class="menurow"><span data-i18n="Language">Language</span> <select id="lang" data-i18n-label="Language" aria-label="Language"><option value="en">English</option><option value="ha">Hausa</option><option value="ar">العربية</option></select></div>
+  <div class="menurow"><span data-i18n="Pace">Pace</span> <select id="pace" data-i18n-label="Pace" aria-label="Pace"><option value="any" data-i18n="Any valid pace">Any valid pace</option><option value="hadr" data-i18n="Ḥadr (fast)">Ḥadr (fast)</option><option value="tadwir" data-i18n="Tadwīr (medium)">Tadwīr (medium)</option><option value="tahqiq" data-i18n="Taḥqīq (slow)">Taḥqīq (slow)</option></select></div>
+  <button class="ghost" id="theme"><svg class="i"><use href="#i-theme"/></svg><span data-i18n="Light / dark">Light / dark</span></button>
+  <button class="ghost" id="help"><svg class="i"><use href="#i-help"/></svg><span data-i18n="How it works">How it works</span></button>
+  <label class="filebtn ghost" id="filebtn" hidden><svg class="i"><use href="#i-headphones"/></svg><span data-i18n="Play a recording">Play a recording</span><input type="file" id="file" accept="audio/*"></label>
+  <span id="demoslot"></span>
+</div>
+
+<div class="banner" id="micdenied" hidden data-i18n="The microphone is blocked. Allow it for this page in Chrome: tap the lock icon next to the address, then Permissions → Microphone → Allow.">The microphone is blocked. Allow it for this page in Chrome: tap the lock icon next to the address, then Permissions → Microphone → Allow.</div>
+<main>
+  <p class="hintline" id="hint" hidden data-i18n="Tap the mic and recite anywhere — or double-tap a word to start from it">Tap the mic and recite anywhere — or double-tap a word to start from it</p>
+  <div id="pages"></div>
+</main>
+
+<!-- Practise: one verse, listen, then recite -->
+<section id="practice" class="panel" data-i18n-label="Practise a verse" aria-label="Practise a verse">
+  <div class="pcard">
+    <div class="phead">
+      <button class="icon-btn" id="pnext" data-i18n-label="Next verse" aria-label="Next verse" title="Next verse"><svg class="i"><use href="#i-left"/></svg></button>
+      <div class="ptitle"><div class="ptitle-ar" id="pname"></div><div class="pmeta" id="pref"></div></div>
+      <button class="icon-btn" id="pprev" data-i18n-label="Previous verse" aria-label="Previous verse" title="Previous verse"><svg class="i"><use href="#i-right"/></svg></button>
+    </div>
+    <div class="quran" id="pverse"></div>
+    <div class="wdots" id="pdots" aria-hidden="true"></div>
+    <div class="pstep" id="pstep"></div>
+    <div class="dots3" id="ptries" data-i18n-label="Tries" aria-label="Tries"></div>
+    <button class="primary wide" id="pstart">Start: listen, then recite</button>
+    <div class="row2">
+      <button id="pturn"><svg class="i"><use href="#i-mic"/></svg><span data-i18n="My turn">My turn</span></button>
+      <button id="pnext2"><span data-i18n="Next verse">Next verse</span></button>
+    </div>
+    <button class="wide" id="pover" hidden data-i18n="Start over">Start over</button>
+    <details class="opts">
+      <summary><svg class="i"><use href="#i-sliders"/></svg><span data-i18n="Options">Options</span></summary>
+      <div class="optrow"><span class="optlabel" data-i18n="Reciter">Reciter</span> <select id="preciter" data-i18n-label="Reciter" aria-label="Reciter"></select></div>
+      <div class="optrow"><span class="optlabel" data-i18n="Listen">Listen</span>
+        <span class="stepper"><button class="icon-btn" id="pminus" data-i18n-label="Fewer times" aria-label="Fewer times"><svg class="i"><use href="#i-minus"/></svg></button><b id="preps">3</b><button class="icon-btn" id="pplus" data-i18n-label="More times" aria-label="More times"><svg class="i"><use href="#i-plus"/></svg></button></span>
+        <span class="optlabel" data-i18n="times">times</span></div>
+      <div class="optrow"><button id="ptext" aria-pressed="false"><svg class="i"><use href="#i-eye"/></svg><span data-i18n="Hide text">Hide text</span></button>
+        <button id="plisten"><svg class="i"><use href="#i-play"/></svg><span data-i18n="Listen once">Listen once</span></button></div>
+    </details>
+  </div>
+  <p class="pfoot" data-i18n="Automatic feedback can be wrong; it does not replace your teacher.">Automatic feedback can be wrong; it does not replace your teacher.</p>
+</section>
+
+<!-- Repeat: a range again and again (loop), or building up (cascade) -->
+<section id="repeat" class="panel" data-i18n-label="Repeat verses" aria-label="Repeat verses">
+  <div class="pcard">
+    <div class="phead"><div class="ptitle"><div class="ptitle-ar" id="rname"></div><div class="pmeta" id="rref"></div></div></div>
+    <div class="optrow"><span class="optlabel" data-i18n="Surah">Surah</span> <select id="rsura" data-i18n-label="Surah" aria-label="Surah"></select></div>
+    <div class="optrow">
+      <span class="optlabel" data-i18n="From verse">From verse</span>
+      <span class="stepper"><button class="icon-btn" data-for="rfrom" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="rfrom" type="number" min="1" inputmode="numeric"><button class="icon-btn" data-for="rfrom" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span>
+    </div>
+    <div class="optrow">
+      <span class="optlabel" data-i18n="To verse">To verse</span>
+      <span class="stepper"><button class="icon-btn" data-for="rto" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="rto" type="number" min="1" inputmode="numeric"><button class="icon-btn" data-for="rto" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span>
+    </div>
+    <div class="optrow"><span class="seg wide" role="group" data-i18n-label="Mode" aria-label="Mode"><button id="rm-loop" aria-pressed="true" data-i18n="Loop">Loop</button><button id="rm-casc" aria-pressed="false" data-i18n="Cascade">Cascade</button></span></div>
+    <div class="mcap" id="rcap"></div>
+    <div class="optrow" id="rloopc">
+      <span class="optlabel" data-i18n="Times">Times</span>
+      <span class="stepper"><button class="icon-btn" data-for="rrounds" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="rrounds" type="number" min="1" max="99" inputmode="numeric"><button class="icon-btn" data-for="rrounds" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span>
+    </div>
+    <div id="rcascc" hidden>
+      <div class="optrow">
+        <span class="optlabel" data-i18n="Each verse">Each verse</span>
+        <span class="stepper"><button class="icon-btn" data-for="rper" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="rper" type="number" min="1" max="99" inputmode="numeric"><button class="icon-btn" data-for="rper" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span>
+      </div>
+      <div class="optrow">
+        <span class="optlabel" data-i18n="Together">Together</span>
+        <span class="stepper"><button class="icon-btn" data-for="rjoint" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="rjoint" type="number" min="1" max="99" inputmode="numeric"><button class="icon-btn" data-for="rjoint" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span>
+      </div>
+    </div>
+    <button class="primary wide" id="rstart"><svg class="i"><use href="#i-mic"/></svg><span data-i18n="Start">Start</span></button>
+    <div class="row2" id="rrun" hidden>
+      <button id="rstop"><svg class="i"><use href="#i-stop"/></svg><span data-i18n="Stop">Stop</span></button>
+      <button id="rreset"><svg class="i"><use href="#i-practise"/></svg><span data-i18n="Start over">Start over</span></button>
+    </div>
+    <div class="pstep" id="rstep"></div>
+    <div class="quran" id="rverse"></div>
+    <ol class="rtally" id="rtally"></ol>
+    <details class="opts">
+      <summary><svg class="i"><use href="#i-sliders"/></svg><span data-i18n="Options">Options</span></summary>
+      <div class="optrow"><button id="rtext" aria-pressed="false"><svg class="i"><use href="#i-eye"/></svg><span data-i18n="Hide text">Hide text</span></button></div>
+    </details>
+  </div>
+  <p class="pfoot" data-i18n="Automatic feedback can be wrong; it does not replace your teacher.">Automatic feedback can be wrong; it does not replace your teacher.</p>
+</section>
+
+<!-- Sessions: past sittings, to review, practise or repeat again -->
+<section id="sessions" class="panel" data-i18n-label="Sessions" aria-label="Sessions">
+  <div class="pcard">
+    <div class="phead"><div class="ptitle"><div class="ptitle-en" data-i18n="Sessions">Sessions</div></div></div>
+    <div class="sesstop">
+      <button id="endsess" data-i18n="End this session now">End this session now</button>
+      <label class="switch"><input type="checkbox" id="saveaudio"> <span data-i18n="Save my recordings">Save my recordings</span></label>
+      <button class="ghost danger" id="delall"><svg class="i"><use href="#i-trash"/></svg><span data-i18n="Delete all">Delete all</span></button>
+    </div>
+    <div class="sesslist" id="sesslist"></div>
+  </div>
+</section>
+
+<nav class="tabbar" role="tablist" data-i18n-label="Section" aria-label="Section">
+  <button id="m-read" role="tab" aria-pressed="true"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg><span data-i18n="Read">Read</span></button>
+  <button id="m-prac" role="tab" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-practise"/></svg><span data-i18n="Practise">Practise</span></button>
+  <button id="m-rep" role="tab" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-repeat"/></svg><span data-i18n="Repeat">Repeat</span></button>
+  <button id="m-sess" role="tab" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-history"/></svg><span data-i18n="Sessions">Sessions</span></button>
+</nav>
+<div class="bar">
+  <button id="nextpg" class="icon-btn arrow" data-i18n-label="Next page" aria-label="Next page" title="Next page"><svg class="i"><use href="#i-left"/></svg></button>
+  <span class="pg" id="pgnum">Page 1</span>
+  <button id="mic" data-i18n-label="Start reciting" aria-label="Start reciting" title="Start reciting"><svg class="i"><use href="#i-mic"/></svg></button>
+  <span class="pg" id="where"></span>
+  <button id="prevpg" class="icon-btn arrow" data-i18n-label="Previous page" aria-label="Previous page" title="Previous page"><svg class="i"><use href="#i-right"/></svg></button>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="false" aria-labelledby="sheettitle">
+  <div class="top"><h3 id="sheettitle">Try this word again</h3><span class="term" id="sheetterm"></span><button class="icon-btn ghost" id="sheetclose" data-i18n-label="Close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="word" id="exp"></div>
+  <div class="actions">
+    <button class="primary" id="listen"><svg class="i"><use href="#i-play"/></svg><span data-i18n="Listen">Listen</span></button>
+    <button id="mine" hidden><svg class="i"><use href="#i-play"/></svg><span data-i18n="My recording">My recording</span></button>
+    <button id="sheetstart" data-i18n="Start here">Start here</button>
+    <button id="sheetprac" data-i18n="Practise this verse">Practise this verse</button>
+  </div>
+  <button class="linkish" id="showsounds">Show sounds</button>
+  <div class="sounds" id="sounds"><div><span data-i18n="Expected:">Expected:</span> <span class="ph" id="expph"></span></div><div><span data-i18n="We heard:">We heard:</span> <span class="ph" id="heard"></span></div></div>
+</div>
+
+<div class="overlay" id="gotobox"><div class="dialog" role="dialog" data-i18n-label="Go to" aria-label="Go to">
+  <div class="head"><input id="gotofilter" data-i18n-ph="Surah name or number, or 18:10" placeholder="Surah name or number, or 18:10" data-i18n-label="Surah, or surah:verse" aria-label="Surah, or surah:verse"><input id="gotopage" type="number" min="1" max="604" data-i18n-ph="Page" placeholder="Page" data-i18n-label="Page" aria-label="Page" style="width:96px"><button class="icon-btn ghost" id="gotoclose" data-i18n-label="Close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="tabs" role="tablist"><span class="seg wide"><button id="t-surah" aria-pressed="true" data-i18n="Surah">Surah</button><button id="t-juz" aria-pressed="false" data-i18n="Juz">Juz</button></span></div>
+  <div class="list" id="surahlist"></div>
+  <div class="vstep" id="vstep" hidden>
+    <button id="vback" class="linkish" data-i18n="‹ All surahs">‹ All surahs</button>
+    <div class="vtitle"><span class="ar" id="vname"></span> <span class="meta" id="ven"></span></div>
+    <label class="vrow"><span data-i18n="Verse">Verse</span> <input id="vnum" type="number" min="1" value="1" inputmode="numeric" data-i18n-label="Verse number" aria-label="Verse number"> <span class="meta" id="vof"></span></label>
+    <div class="vbtns" id="vbtns"></div>
+  </div>
+</div></div>
+
+
+<div class="reviewbar" id="reviewbar"><span id="reviewtext"></span><button id="reviewplay"><svg class="i"><use href="#i-play"/></svg><span data-i18n="Play session">Play session</span></button><button id="reviewprac" data-i18n="Practise these">Practise these</button><button class="primary" id="reviewexit" data-i18n="Close review">Close review</button></div>
+
+<div class="overlay" id="askbox"><div class="dialog" role="alertdialog"><div class="guide">
+  <p id="asktext" style="color:var(--ink);font-size:17px"></p>
+  <div class="row2"><button id="askno" data-i18n="Cancel">Cancel</button><button class="primary" id="askyes" data-i18n="Yes">Yes</button></div>
+</div></div></div>
+
+<div class="overlay" id="guidebox"><div class="dialog"><div class="guide">
+  <div class="icon" id="gicon"></div><h3 id="gtitle"></h3><p id="gtext"></p><div id="gextra"></div>
+  <div class="dots" id="gdots"></div>
+  <div class="row2"><button id="gskip" data-i18n="Skip">Skip</button><button class="primary" id="gnext">Next</button></div>
+</div></div></div>
+
+<script src="/static/i18n.js"></script>
+<script src="/static/js/core.js"></script>
+<script src="/static/js/mushaf.js"></script>
+<script src="/static/js/follow.js"></script>
+<script src="/static/js/panels.js"></script>
+<script src="/static/js/practise.js"></script>
+<script src="/static/js/repeat.js"></script>
+<script src="/static/js/settings.js"></script>
+<script src="/static/js/audio.js"></script>
+</body>
+</html>
