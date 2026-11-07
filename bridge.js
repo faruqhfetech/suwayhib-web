@@ -63,5 +63,18 @@
   };
   worker.onerror = (e) => deliver(JSON.stringify([{ type: "status", text: `Could not start: ${e.message}` }]));
 
-  document.addEventListener("DOMContentLoaded", () => document.body.classList.add("inweb"));
+  const CONTACT = "umarhfe@gmail.com";
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("inweb");
+    // the menu: a way to get in touch (this version only)
+    const a = document.createElement("a");
+    a.className = "menulink"; a.href = `mailto:${CONTACT}`;
+    a.innerHTML = `<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>` +
+                  `<span><span data-i18n="Contact">Contact</span>: ${CONTACT}</span>`;
+    document.getElementById("menu").appendChild(a);
+    const st = document.createElement("style");
+    st.textContent = `.menulink { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 8px 16px;
+      color: var(--ink); text-decoration: none; border-radius: 12px; } .menulink:hover { background: var(--surface-2); }`;
+    document.head.appendChild(st);
+  });
 })();

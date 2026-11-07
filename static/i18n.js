@@ -161,6 +161,7 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "Taɓa 🎙 Lokacina idan ka shirya.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "Komai yana faruwa a wannan na'ura; ba a aika karatunka ko'ina, ba a kuma adana shi.",
     "A companion between lessons — not a replacement for your teacher.": "Abokin bita tsakanin darussa — ba madadin malaminka ba.",
+    "Contact": "Tuntuɓa",  // DRAFT: please correct
     "Recite the verse when you're ready.": "Karanta ayar idan ka shirya.",  // DRAFT: please correct
     "That sounds like a different verse.": "Kamar wata aya ce daban.",  // DRAFT: please correct
     "It sounds like a word was missed. Tap the coloured words to see them.": "Kamar an tsallake wata kalma. Taɓa kalmomin masu launi don ganin su.",  // DRAFT: please correct
@@ -288,6 +289,7 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "اضغط 🎙 دوري حين تستعد.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "كل شيء يجري على هذا الجهاز؛ لا تُرسل تلاوتك إلى أي مكان ولا تُحفظ.",
     "A companion between lessons — not a replacement for your teacher.": "رفيق بين الدروس — لا يغني عن شيخك.",
+    "Contact": "تواصل",
     "Recite the verse when you're ready.": "اقرأ الآية حين تستعد.",
     "That sounds like a different verse.": "يبدو أنها آية أخرى.",
     "It sounds like a word was missed. Tap the coloured words to see them.": "يبدو أن كلمة فاتت. اضغط الكلمات الملوّنة لتراها.",
