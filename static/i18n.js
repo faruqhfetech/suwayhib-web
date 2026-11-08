@@ -161,6 +161,14 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "Taɓa 🎙 Lokacina idan ka shirya.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "Komai yana faruwa a wannan na'ura; ba a aika karatunka ko'ina, ba a kuma adana shi.",
     "A companion between lessons — not a replacement for your teacher.": "Abokin bita tsakanin darussa — ba madadin malaminka ba.",
+    "Install app": "Saka manhaja",  // DRAFT: please correct
+    "Install Suwayhib": "Saka Suwayhib",  // DRAFT: please correct
+    "Install": "Saka",  // DRAFT: please correct
+    "How": "Yaya",  // DRAFT: please correct
+    "Not now": "Ba yanzu ba",  // DRAFT: please correct
+    "It opens like an app and works offline.": "Yana buɗewa kamar manhaja kuma yana aiki ba tare da intanet ba.",  // DRAFT: please correct
+    "Add it to your home screen: it opens like an app and works offline.": "Saka shi a allon farko: yana buɗewa kamar manhaja kuma yana aiki ba tare da intanet ba.",  // DRAFT: please correct
+    "To install: tap the Share button, then “Add to Home Screen”.": "Don sakawa: taɓa maɓallin Raba, sannan “Add to Home Screen”.",  // DRAFT: please correct
     "My recordings": "Rikodina",  // DRAFT: please correct
     "Recitations": "Karatuttuka",  // DRAFT: please correct
     "Room left": "Sauran wuri",  // DRAFT: please correct
@@ -318,6 +326,14 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "اضغط 🎙 دوري حين تستعد.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "كل شيء يجري على هذا الجهاز؛ لا تُرسل تلاوتك إلى أي مكان ولا تُحفظ.",
     "A companion between lessons — not a replacement for your teacher.": "رفيق بين الدروس — لا يغني عن شيخك.",
+    "Install app": "تثبيت التطبيق",
+    "Install Suwayhib": "ثبّت صُوَيْهِب",
+    "Install": "تثبيت",
+    "How": "كيف",
+    "Not now": "ليس الآن",
+    "It opens like an app and works offline.": "يُفتح كتطبيق ويعمل دون اتصال.",
+    "Add it to your home screen: it opens like an app and works offline.": "أضفه إلى الشاشة الرئيسية: يُفتح كتطبيق ويعمل دون اتصال.",
+    "To install: tap the Share button, then “Add to Home Screen”.": "للتثبيت: اضغط زر المشاركة، ثم «إضافة إلى الشاشة الرئيسية».",
     "My recordings": "تسجيلاتي",
     "Recitations": "التلاوات",
     "Room left": "المساحة المتبقية",

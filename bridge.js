@@ -93,18 +93,66 @@
   // installable, and offline after the first visit (sw.js)
   if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 
+  // ---------- "Install app": Chrome/Edge/Android offer it through beforeinstallprompt; Safari
+  // (iPhone, iPad) has no prompt, so it is explained: Share, then Add to Home Screen ----------
+  let installEvt = null;
+  const standalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const SNOOZE = "suwayhib.installSnooze";
+  const snoozed = () => { try { return Date.now() < +(localStorage.getItem(SNOOZE) || 0); } catch (e) { return false; } };
+  addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvt = e; offerInstall(); });
+  addEventListener("appinstalled", () => { installEvt = null; hideInstall(); });
+  function hideInstall() {
+    document.getElementById("installbar")?.remove();
+    const b = document.getElementById("m-install"); if (b) b.hidden = true;
+  }
+  async function doInstall() {
+    if (installEvt) {
+      installEvt.prompt();
+      const { outcome } = await installEvt.userChoice.catch(() => ({}));
+      installEvt = null;
+      if (outcome === "accepted") hideInstall(); else document.getElementById("installbar")?.remove();
+    } else if (ios) {
+      alert(T("To install: tap the Share button, then “Add to Home Screen”."));
+    }
+  }
+  const T = (k) => (typeof t === "function" ? t(k) : k);
+  function offerInstall() {
+    if (standalone() || !document.body) return;
+    const b = document.getElementById("m-install"); if (b) b.hidden = false;
+    if (snoozed() || document.getElementById("installbar")) return;
+    const bar = document.createElement("div"); bar.id = "installbar"; bar.setAttribute("role", "region");
+    bar.innerHTML = `<img src="static/icons/icon-192.png" alt="" width="36" height="36">
+      <span><b>${T("Install Suwayhib")}</b><br><small>${T(ios ? "Add it to your home screen: it opens like an app and works offline." : "It opens like an app and works offline.")}</small></span>
+      <button class="primary" id="installgo">${T(ios ? "How" : "Install")}</button>
+      <button class="icon-btn ghost" id="installno" aria-label="${T("Not now")}">✕</button>`;
+    document.body.appendChild(bar);
+    bar.querySelector("#installgo").onclick = doInstall;
+    bar.querySelector("#installno").onclick = () => { try { localStorage.setItem(SNOOZE, Date.now() + 14 * 864e5); } catch (e) {} bar.remove(); };
+  }
+
   const CONTACT = "umarhfe@gmail.com";
   document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("inweb");
-    document.getElementById("boothint").hidden = false;  // the first visit's download, explained
+    document.getElementById("boothint").hidden = false;
+    if (ios && !standalone()) setTimeout(offerInstall, 4000);
+    if (installEvt) setTimeout(offerInstall, 0);  // the offer came before the page was built  // the first visit's download, explained
     // the menu: a way to get in touch (this version only)
     const a = document.createElement("a");
     a.className = "menulink"; a.href = `mailto:${CONTACT}`;
     a.innerHTML = `<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>` +
                   `<span><span data-i18n="Contact">Contact</span>: ${CONTACT}</span>`;
+    const ib = document.createElement("button"); ib.className = "ghost"; ib.id = "m-install"; ib.hidden = true;
+    ib.innerHTML = `<svg class="i"><use href="#i-download"/></svg><span data-i18n="Install app">Install app</span>`;
+    ib.onclick = () => { document.getElementById("menu").classList.remove("show"); doInstall(); };
+    document.getElementById("menu").appendChild(ib);
     document.getElementById("menu").appendChild(a);
     const st = document.createElement("style");
-    st.textContent = `.menulink { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 8px 16px;
+    st.textContent = `#installbar { position: fixed; left: 12px; right: 12px; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 30;
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--card); color: var(--ink);
+      border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); max-width: 520px; margin: 0 auto; }
+      #installbar span { flex: 1; line-height: 1.3; } #installbar small { color: var(--muted); } #installbar img { border-radius: 50%; }
+      .menulink { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 8px 16px;
       color: var(--ink); text-decoration: none; border-radius: 12px; } .menulink:hover { background: var(--surface-2); }`;
     document.head.appendChild(st);
   });
