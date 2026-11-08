@@ -125,7 +125,8 @@ body.paged.reading .tabbar { position: static; flex: none; order: 99; }
 .surah { display: block; text-align: center; margin: var(--s2) 0; padding: var(--s1) 0; border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line); font-size: .8em; color: var(--accent); }
 .v { border-radius: var(--r-sm); padding: 2px 0; transition: background .3s; }
-.v.current { background: var(--surface-2); }
+/* translucent: the font's marks reach into the line above, and must show through the tint */
+.v.current { background: rgba(29,92,99,.11); background: color-mix(in srgb, var(--accent) 11%, transparent); }
 .w { border-radius: 6px; padding: 0 2px; transition: color .25s, background .25s; cursor: pointer; }
 .w.ok { color: var(--ok); }
 .w.cur { background: var(--cur-bg); box-shadow: inset 0 -2px 0 var(--cur); }
