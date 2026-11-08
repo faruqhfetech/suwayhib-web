@@ -161,6 +161,10 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "Taɓa 🎙 Lokacina idan ka shirya.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "Komai yana faruwa a wannan na'ura; ba a aika karatunka ko'ina, ba a kuma adana shi.",
     "A companion between lessons — not a replacement for your teacher.": "Abokin bita tsakanin darussa — ba madadin malaminka ba.",
+    "My recordings": "Rikodina",  // DRAFT: please correct
+    "Recitations": "Karatuttuka",  // DRAFT: please correct
+    "Room left": "Sauran wuri",  // DRAFT: please correct
+    "Recordings are compressed. The newest 500 MB from the last 30 days are kept; older ones are removed, their sessions stay.": "Ana matse rikodi. Ana ajiye sabbin MB 500 na kwanaki 30 na ƙarshe; ana cire tsofaffi, zamansu kuma suna nan.",  // DRAFT: please correct
     "Listen and repeat": "Saurara ka maimaita",  // DRAFT: please correct
     "Listening cascade": "Saurare a jere",  // DRAFT: please correct
     "Pause between (s)": "Hutu tsakani (daƙ.)",  // DRAFT: please correct
@@ -314,6 +318,10 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "اضغط 🎙 دوري حين تستعد.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "كل شيء يجري على هذا الجهاز؛ لا تُرسل تلاوتك إلى أي مكان ولا تُحفظ.",
     "A companion between lessons — not a replacement for your teacher.": "رفيق بين الدروس — لا يغني عن شيخك.",
+    "My recordings": "تسجيلاتي",
+    "Recitations": "التلاوات",
+    "Room left": "المساحة المتبقية",
+    "Recordings are compressed. The newest 500 MB from the last 30 days are kept; older ones are removed, their sessions stay.": "التسجيلات مضغوطة. يُحتفظ بأحدث 500 م.ب من آخر 30 يومًا؛ وتُحذف الأقدم وتبقى جلساتها.",
     "Listen and repeat": "استمع وردّد",
     "Listening cascade": "الاستماع المتدرّج",
     "Pause between (s)": "توقف بين (ث)",

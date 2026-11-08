@@ -3,12 +3,10 @@
 // server/app's Python engine. Loaded before the app's own scripts.
 //
 // Reference recitations come from everyayah.com and the service worker keeps each one, so a
-// verse played once plays offline (the Downloads page lists and deletes them). This build keeps
-// no recordings of the learner (window.SUWAYHIB_NOREC). Sessions, colours and Repeat setups
-// are saved in this browser.
+// verse played once plays offline (the Downloads page lists and deletes them). Sessions, colours,
+// Repeat setups and the learner's recordings (compressed, see AUD in core.js) are saved in this browser.
 (() => {
   window.SUWAYHIB_INWEB = true;
-  window.SUWAYHIB_NOREC = true;
   const worker = new Worker("worker.js");
   let sock = null;
   const held = [];  // engine replies that arrive before the page's handler exists

@@ -220,11 +220,21 @@ function verseRanges(ayat) {  // [1,2,3,5,7,8] -> "1–3, 5, 7–8"
   if (a !== null) out.push(a === b ? `${a}` : `${a}–${b}`);
   return out.join(", ");
 }
-const size = (bytes) => bytes < 1e6 ? `${Math.max(1, Math.round(bytes / 1e3))} KB` : `${(bytes / 1e6).toFixed(bytes < 1e7 ? 1 : 0)} MB`;
+const size = (bytes) => !bytes ? "0 KB" : bytes < 1e6 ? `${Math.max(1, Math.round(bytes / 1e3))} KB` : `${(bytes / 1e6).toFixed(bytes < 1e7 ? 1 : 0)} MB`;
 async function buildDownloads() {
   const list = $("dllist"); list.innerHTML = "";
   const items = await window.SuwayhibDownloads.list();
-  if (!items.length) { list.innerHTML = `<div class="sessempty">${t("Nothing downloaded yet. A reciter's verse is kept here the first time you play it.")}</div>`; return; }
+  // what this app keeps on the device: recordings, recitations, and the room left
+  const recBytes = store.get("suwayhib.sessions", []).concat(SES ? [SES] : []).reduce((k, x) => k + (x.samples ? x.bytes || x.samples * 2 : 0), 0);
+  const recitBytes = items.reduce((k, x) => k + (x.bytes || 0), 0);
+  const est = await navigator.storage?.estimate?.().catch(() => null);
+  const sum = document.createElement("div"); sum.className = "dlsum";
+  sum.innerHTML = `<div><span class="meta">${t("My recordings")}</span> <b>${size(recBytes)}</b></div>
+    <div><span class="meta">${t("Recitations")}</span> <b>${size(recitBytes)}</b></div>` +
+    (est && est.quota ? `<div><span class="meta">${t("Room left")}</span> <b>${size(Math.max(0, est.quota - est.usage))}</b></div>` : "") +
+    `<p class="meta">${t("Recordings are compressed. The newest 500 MB from the last 30 days are kept; older ones are removed, their sessions stay.")}</p>`;
+  list.appendChild(sum);
+  if (!items.length) { list.insertAdjacentHTML("beforeend", `<div class="sessempty">${t("Nothing downloaded yet. A reciter's verse is kept here the first time you play it.")}</div>`); return; }
   const names = Object.fromEntries((await (await fetch("/reciters")).json()).map((r) => [r.id, r.name]));
   const byRec = {};
   for (const x of items) {

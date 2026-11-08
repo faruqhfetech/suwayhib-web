@@ -101,16 +101,26 @@ function archiveSession() {  // the finished session goes into the list (only if
   const hist = store.get("suwayhib.sessions", []);
   hist.unshift(SES);
   for (const old of hist.slice(100)) AUD.drop(old.id);  // sessions past the last 100: their audio too
+  // recordings: the newest first, up to REC_CAP_MB in all and none older than REC_DAYS; the
+  // sessions themselves (colours, flags) stay, only without their recording
+  let total = 0;
+  for (const x of hist.slice(0, 100)) {
+    if (!x.samples) continue;
+    total += x.bytes || x.samples * 2;
+    if (total > REC_CAP_MB * 1e6 || Date.now() - x.start > REC_DAYS * 864e5) { AUD.drop(x.id); x.samples = 0; x.bytes = 0; }
+  }
   if (!store.set("suwayhib.sessions", hist.slice(0, 100))) {  // storage full: keep the live one rather than lose it
     toast(t("Storage is full — delete some old sessions")); return;
   }
   SES = null; store.del("suwayhib.session");
 }
+const REC_CAP_MB = 500, REC_DAYS = 30;  // how much of the learner's recordings is kept
 const AUD = {
   db: null, buf: [], n: 0,  // n: samples recorded in the current session
   on: !NOREF && !window.SUWAYHIB_NOREC && store.get("suwayhib.saveaudio", true),
   open() {
     if (this.db) return Promise.resolve(this.db);
+    navigator.storage?.persist?.().catch(() => {});  // ask the browser not to clear it when space runs low
     return new Promise((res, rej) => {
       const r = indexedDB.open("suwayhib", 1);
       r.onupgradeneeded = () => r.result.createObjectStore("audio", { keyPath: ["sid", "i"] });
@@ -122,30 +132,95 @@ const AUD = {
     this.buf.push(x); this.n += x.length;
     if (this.buf.length >= 50) this.flush();
   },
+  // Each piece (about 5 s) is compressed to Opus with the browser's own encoder (WebCodecs):
+  // about 0.12 MB a minute instead of 1.9 MB raw. Where there is no encoder, the raw samples
+  // are kept as before; load() reads both.
   async flush() {
     if (!this.buf.length || !SES) return;
     const parts = this.buf; this.buf = [];
-    const len = parts.reduce((k, c) => k + c.length, 0), pcm = new Int16Array(len);
-    let o = 0; for (const c of parts) { for (let j = 0; j < c.length; j++) pcm[o + j] = Math.max(-1, Math.min(1, c[j])) * 32767; o += c.length; }
+    const len = parts.reduce((k, c) => k + c.length, 0), x = new Float32Array(len);
+    let o = 0; for (const c of parts) { x.set(c, o); o += c.length; }
     SES.pieces = (SES.pieces || 0) + 1; SES.samples = this.n; saveSession();
-    const sid = SES.id, i = SES.pieces;  // taken now: the session may be archived before the write below
-    try { const db = await this.open(); db.transaction("audio", "readwrite").objectStore("audio").put({ sid, i, pcm }); } catch (e) {}
+    const sid = SES.id, i = SES.pieces, ses = SES;  // taken now: the session may be archived before the write below
+    let row = null;
+    try { if (await opusOK()) row = { sid, i, n: len, opus: await opusEncode(x) }; } catch (e) { row = null; }
+    if (!row) {
+      const pcm = new Int16Array(len);
+      for (let j = 0; j < len; j++) pcm[j] = Math.max(-1, Math.min(1, x[j])) * 32767;
+      row = { sid, i, pcm };
+    }
+    ses.bytes = (ses.bytes || 0) + (row.opus ? row.opus.reduce((k, p) => k + p.byteLength, 0) : row.pcm.byteLength);
+    if (ses === SES) saveSession();
+    try { const db = await this.open(); db.transaction("audio", "readwrite").objectStore("audio").put(row); } catch (e) {}
   },
   async load(sid) {  // the whole session's recording as one Float32Array
     const db = await this.open();
     const rows = await new Promise((res) => {
       const out = [], q = db.transaction("audio").objectStore("audio").openCursor(IDBKeyRange.bound([sid, 0], [sid, Infinity]));
-      q.onsuccess = () => { const c = q.result; if (c) { out.push(c.value.pcm); c.continue(); } else res(out); };
+      q.onsuccess = () => { const c = q.result; if (c) { out.push(c.value); c.continue(); } else res(out); };
       q.onerror = () => res(out);
     });
-    const len = rows.reduce((k, r) => k + r.length, 0), x = new Float32Array(len);
-    let o = 0; for (const r of rows) { for (let j = 0; j < r.length; j++) x[o + j] = r[j] / 32767; o += r.length; }
+    const pieces = [];
+    for (const r of rows) {
+      if (r.opus) pieces.push(await opusDecode(r.opus, r.n));
+      else { const p = r.pcm || r, f = new Float32Array(p.length); for (let j = 0; j < p.length; j++) f[j] = p[j] / 32767; pieces.push(f); }
+    }
+    const len = pieces.reduce((k, r) => k + r.length, 0), x = new Float32Array(len);
+    let o = 0; for (const r of pieces) { x.set(r, o); o += r.length; }
     return x;
   },
   async drop(sid) {
     try { const db = await this.open(); db.transaction("audio", "readwrite").objectStore("audio").delete(IDBKeyRange.bound([sid, 0], [sid, Infinity])); } catch (e) {}
   },
 };
+// ---------- Opus, with the browser's encoder and decoder (WebCodecs) ----------
+const OPUS = { codec: "opus", sampleRate: 16000, numberOfChannels: 1 };
+let opusSupport = null;
+function opusOK() {
+  opusSupport ||= (async () => {
+    if (!("AudioEncoder" in window) || !("AudioDecoder" in window)) return false;
+    try {
+      return (await AudioEncoder.isConfigSupported({ ...OPUS, bitrate: 24000 })).supported &&
+             (await AudioDecoder.isConfigSupported(OPUS)).supported;
+    } catch (e) { return false; }
+  })();
+  return opusSupport;
+}
+async function opusEncode(x) {  // Float32 at 16 kHz -> a list of Opus packets
+  const packets = [];
+  let err = null;
+  const enc = new AudioEncoder({ output: (c) => { const b = new Uint8Array(c.byteLength); c.copyTo(b); packets.push(b.buffer); }, error: (e) => (err = e) });
+  enc.configure({ ...OPUS, bitrate: 24000 });
+  enc.encode(new AudioData({ format: "f32-planar", sampleRate: 16000, numberOfFrames: x.length, numberOfChannels: 1, timestamp: 0, data: x }));
+  await enc.flush(); enc.close();
+  if (err) throw err;
+  return packets;
+}
+async function opusDecode(packets, n) {  // back to Float32 at 16 kHz, exactly n samples (word positions count samples)
+  const outs = [];
+  let err = null, rate = 16000;
+  const dec = new AudioDecoder({ output: (d) => {
+    rate = d.sampleRate; const f = new Float32Array(d.numberOfFrames);
+    d.copyTo(f, { planeIndex: 0, format: "f32-planar" }); outs.push(f); d.close();
+  }, error: (e) => (err = e) });
+  dec.configure(OPUS);
+  let ts = 0;
+  for (const p of packets) { dec.decode(new EncodedAudioChunk({ type: "key", timestamp: ts, data: p })); ts += 20000; }
+  await dec.flush(); dec.close();
+  if (err) throw err;
+  let len = outs.reduce((k, f) => k + f.length, 0), y = new Float32Array(len), o = 0;
+  for (const f of outs) { y.set(f, o); o += f.length; }
+  if (rate !== 16000) {  // decoders give 48 kHz whatever is asked: back to 16 kHz (averaging, not just picking)
+    const k = Math.round(rate / 16000), z = new Float32Array(Math.floor(y.length / k));
+    for (let j = 0; j < z.length; j++) { let a = 0; for (let q = 0; q < k; q++) a += y[j * k + q]; z[j] = a / k; }
+    y = z;
+  }
+  // Opus starts with a fixed 6.5 ms delay (its pre-skip): drop it, then exactly n samples
+  // (word positions in a session count samples, so the length must match what was recorded)
+  const skip = 104, z = new Float32Array(n);
+  z.set(y.subarray(skip, skip + n));
+  return z;
+}
 addEventListener("pagehide", () => AUD.flush());
 if (SES) AUD.n = SES.samples || 0;  // reopened within the session: positions continue from here
 function recordWord(s, a, w, st, m) {
