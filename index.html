@@ -37,6 +37,15 @@
   </defs>
 </svg>
 
+<!-- the loading cover: until the engine says it is ready (core.js, bootStatus) -->
+<div id="boot" role="status" aria-live="polite">
+  <div class="blogo"><svg class="i"><use href="#i-mic"/></svg></div>
+  <div class="bn">Suwayhib</div>
+  <div class="bbar"><i></i></div>
+  <div class="bt" id="boottext">Starting…</div>
+  <div class="bh" id="boothint" hidden data-i18n="The first visit downloads about 90 MB, then it works offline.">The first visit downloads about 90 MB, then it works offline.</div>
+</div>
+
 <header>
   <span class="brand">Suwayhib</span>
   <span class="pill" id="status">Connecting…</span>

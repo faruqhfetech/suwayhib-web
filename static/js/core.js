@@ -27,7 +27,22 @@ connect();
 const send = (o) => { if (ws.readyState === 1) ws.send(JSON.stringify(o)); };
 
 let lastStatus = "Connecting…";
-function status(x) { lastStatus = x; $("status").textContent = tStatus(x); }
+function status(x) { lastStatus = x; $("status").textContent = tStatus(x); bootStatus(x); }
+// the loading cover: steps (and a download percentage) move the bar; the engine's own
+// "Ready. Start reciting anywhere." (server, Android and in-browser alike) lifts it
+const BOOT_STEPS = [["Preparing", 0.05], ["Loading Python", 0.05], ["Downloading", 0.1], ["Unpacking", 0.1],
+                    ["Loading the model", 0.6], ["Loading the follow-along engine", 0.85], ["Starting", 0.95]];
+let bootAt = 0;
+function bootStatus(x) {
+  const b = $("boot"); if (!b || b.classList.contains("done")) return;
+  if (/^Ready\. /.test(x)) { b.classList.add("done"); setTimeout(() => b.remove(), 400); return; }
+  b.classList.toggle("failed", /^Could not start/.test(x));
+  for (const [k, v] of BOOT_STEPS) if (x.startsWith(k)) bootAt = Math.max(bootAt, v);
+  const pct = /(\d+)%/.exec(x);
+  if (pct && /^(Downloading|Unpacking)/.test(x)) bootAt = Math.max(bootAt, 0.1 + 0.75 * pct[1] / 100);
+  b.querySelector(".bbar i").style.width = `${Math.max(6, Math.round(100 * bootAt))}%`;
+  $("boottext").textContent = tStatus(x);
+}
 function toast(x) {
   const el = $("toast"); el.textContent = t(x); el.classList.add("show");
   clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove("show"), 2600);

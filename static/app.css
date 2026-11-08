@@ -281,6 +281,20 @@ button.danger { color: var(--err); }
   padding: var(--s2) var(--s4); font-size: 15px; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 40; max-width: calc(100% - 24px); }
 .toast.show { opacity: 1; }
 
+/* the loading cover, until the engine is ready */
+#boot { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--s3); padding: var(--s5); background: var(--bg); color: var(--ink); text-align: center; transition: opacity .35s; }
+#boot.done { opacity: 0; pointer-events: none; }
+#boot .blogo { width: 88px; height: 88px; border-radius: 22px; background: var(--accent); color: var(--on-accent);
+  display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow); }
+#boot .blogo .i { width: 46px; height: 46px; stroke-width: 1.8; }
+#boot .bn { font-size: 24px; font-weight: 650; }
+#boot .bbar { width: min(280px, 80vw); height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+#boot .bbar i { display: block; height: 100%; width: 6%; background: var(--accent); transition: width .3s; }
+#boot .bt { color: var(--muted); min-height: 1.4em; }
+#boot .bh { color: var(--muted); font-size: 13px; max-width: 320px; }
+#boot.failed .bbar { display: none; } #boot.failed .bt { color: var(--err); }
+
 /* the in-browser build (inweb/): no reference recitations, no recordings */
 body.inweb #listen, body.inweb #mine, body.inweb #reviewplay, body.inweb #plisten, body.inweb #pturn,
 body.inweb .switch, body.inweb .optrow:has(#preciter), body.inweb .optrow:has(#preps) { display: none !important; }

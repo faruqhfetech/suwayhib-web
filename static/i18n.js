@@ -161,6 +161,11 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "Taɓa 🎙 Lokacina idan ka shirya.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "Komai yana faruwa a wannan na'ura; ba a aika karatunka ko'ina, ba a kuma adana shi.",
     "A companion between lessons — not a replacement for your teacher.": "Abokin bita tsakanin darussa — ba madadin malaminka ba.",
+    "The first visit downloads about 90 MB, then it works offline.": "Ziyarar farko tana sauke kusan MB 90, sannan tana aiki ba tare da intanet ba.",  // DRAFT: please correct
+    "Starting…": "Ana farawa…",  // DRAFT: please correct
+    "Loading Python…": "Ana loda Python…",  // DRAFT: please correct
+    "Loading the follow-along engine…": "Ana loda injin bibiya…",  // DRAFT: please correct
+    "Loading the model…": "Ana loda samfurin…",  // DRAFT: please correct
     "Contact": "Tuntuɓa",  // DRAFT: please correct
     "Recite the verse when you're ready.": "Karanta ayar idan ka shirya.",  // DRAFT: please correct
     "That sounds like a different verse.": "Kamar wata aya ce daban.",  // DRAFT: please correct
@@ -289,6 +294,11 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "اضغط 🎙 دوري حين تستعد.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "كل شيء يجري على هذا الجهاز؛ لا تُرسل تلاوتك إلى أي مكان ولا تُحفظ.",
     "A companion between lessons — not a replacement for your teacher.": "رفيق بين الدروس — لا يغني عن شيخك.",
+    "The first visit downloads about 90 MB, then it works offline.": "تنزّل الزيارة الأولى نحو 90 ميغابايت، ثم يعمل دون إنترنت.",
+    "Starting…": "جارٍ البدء…",
+    "Loading Python…": "جارٍ تحميل Python…",
+    "Loading the follow-along engine…": "جارٍ تحميل محرك المتابعة…",
+    "Loading the model…": "جارٍ تحميل النموذج…",
     "Contact": "تواصل",
     "Recite the verse when you're ready.": "اقرأ الآية حين تستعد.",
     "That sounds like a different verse.": "يبدو أنها آية أخرى.",

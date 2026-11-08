@@ -4,7 +4,7 @@
 //   change at the same URL: the model parts carry a version (?v=, see worker.js), the engine and
 //   Pyodide are pinned versions.
 // build.py fills in VERSION and SHELL.
-const VERSION = "fe6c850688b9";
+const VERSION = "cae70f3ca437";
 const SHELL = ["./", "index.html", "bridge.js", "worker.js", "manifest.webmanifest", "sherpa/parts.json", "sherpa/sherpa-onnx-wasm-main-asr.js", "sherpa/sherpa-onnx-asr.js", "static/app.css", "static/i18n.js", "static/index.html", "static/js/audio.js", "static/js/core.js", "static/js/follow.js", "static/js/mushaf.js", "static/js/panels.js", "static/js/practise.js", "static/js/repeat.js", "static/js/settings.js", "py/app.zip", "py/quran_transcript-0.6.1-py3-none-any.whl", "py/wheels.json", "py/xmltodict-1.0.4-py3-none-any.whl", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-192.png", "icons/maskable-512.png"];
 const APP = `suwayhib-app-${VERSION}`;
 const HEAVY = "suwayhib-heavy";
