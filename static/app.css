@@ -219,7 +219,7 @@ details.opts summary::-webkit-details-marker { display: none; }
 details.opts[open] summary { color: var(--ink); }
 details.opts > .optrow { margin: var(--s2) 0; }
 #repeat.running .rsetup, #lcas.running .lsetup { display: none !important; }  /* while it runs: the verses, not the settings */
-#rcascc { display: grid; gap: var(--s3); }  /* the two cascade counts: same spacing as every other row */
+#rcascc, #lcascc { display: grid; gap: var(--s3); }  /* the two cascade counts: same spacing as every other row */
 .rtally { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--muted); max-height: 9.5em; overflow: auto; }
 .rtally:empty { display: none; }
 .rtally li { padding: 2px 0; }
