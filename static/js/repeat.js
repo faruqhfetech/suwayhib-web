@@ -170,6 +170,7 @@ function repeatLost() {
 // ---------- the tab ----------
 function setRepeat(on) {
   leaveSessions();
+  if (typeof lStop === "function" && L.on) lStop();
   if (on === repeating) return;
   if (on && practising) setSection(false);
   repeating = on;

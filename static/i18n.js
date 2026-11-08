@@ -161,6 +161,18 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "Taɓa 🎙 Lokacina idan ka shirya.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "Komai yana faruwa a wannan na'ura; ba a aika karatunka ko'ina, ba a kuma adana shi.",
     "A companion between lessons — not a replacement for your teacher.": "Abokin bita tsakanin darussa — ba madadin malaminka ba.",
+    "Listen and repeat": "Saurara ka maimaita",  // DRAFT: please correct
+    "Listening cascade": "Saurare a jere",  // DRAFT: please correct
+    "Pause between (s)": "Hutu tsakani (daƙ.)",  // DRAFT: please correct
+    "Start listening": "Fara saurare",  // DRAFT: please correct
+    "Pause": "Dakata",  // DRAFT: please correct
+    "Resume": "Ci gaba",  // DRAFT: please correct
+    "Same reciter as Listen and repeat.": "Mai karatu ɗaya da na Saurara ka maimaita.",  // DRAFT: please correct
+    "Hear the whole range again and again.": "Saurari dukan ayoyin akai-akai.",  // DRAFT: please correct
+    "Hear each verse on its own, then everything so far together, one verse more each time.": "Saurari kowace aya ita kaɗai, sannan duk abin da ya gabata tare, ana ƙara aya ɗaya kowane lokaci.",  // DRAFT: please correct
+    "Getting the recitation… {i} of {n}": "Ana samo karatun… {i} cikin {n}",  // DRAFT: please correct
+    "Could not get the recitation. Check the connection.": "Ba a samu karatun ba. Duba haɗin intanet.",  // DRAFT: please correct
+    "Choose the verses, then Start listening.": "Zaɓi ayoyin, sannan Fara saurare.",  // DRAFT: please correct
     "1 verse · {size}": "aya 1 · {size}",  // DRAFT: please correct
     "{n} verses · {size}": "ayoyi {n} · {size}",  // DRAFT: please correct
     "Tap My turn when ready.": "Taɓa Lokacina idan ka shirya.",  // DRAFT: please correct
@@ -302,6 +314,18 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "اضغط 🎙 دوري حين تستعد.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "كل شيء يجري على هذا الجهاز؛ لا تُرسل تلاوتك إلى أي مكان ولا تُحفظ.",
     "A companion between lessons — not a replacement for your teacher.": "رفيق بين الدروس — لا يغني عن شيخك.",
+    "Listen and repeat": "استمع وردّد",
+    "Listening cascade": "الاستماع المتدرّج",
+    "Pause between (s)": "توقف بين (ث)",
+    "Start listening": "ابدأ الاستماع",
+    "Pause": "إيقاف مؤقت",
+    "Resume": "متابعة",
+    "Same reciter as Listen and repeat.": "نفس القارئ في «استمع وردّد».",
+    "Hear the whole range again and again.": "استمع إلى المقطع كله مرة بعد مرة.",
+    "Hear each verse on its own, then everything so far together, one verse more each time.": "استمع إلى كل آية وحدها، ثم إلى ما سبق كله معًا، بزيادة آية كل مرة.",
+    "Getting the recitation… {i} of {n}": "جارٍ جلب التلاوة… {i} من {n}",
+    "Could not get the recitation. Check the connection.": "تعذّر جلب التلاوة. تحقّق من الاتصال.",
+    "Choose the verses, then Start listening.": "اختر الآيات، ثم ابدأ الاستماع.",
     "1 verse · {size}": "آية واحدة · {size}",
     "{n} verses · {size}": "{n} آية · {size}",
     "Tap My turn when ready.": "اضغط دوري حين تستعد.",

@@ -18,6 +18,7 @@ function renderTries() {
 let readPage = null;  // where the learner was in Read, to come back to
 function setSection(prac, verseGiven) {
   leaveSessions();
+  if (typeof lStop === "function" && L.on) lStop();  // the listening cascade (listen.js)
   if (repeating) { repeating = false; R.on = false; $("repeat").classList.remove("running"); document.body.classList.remove("repeating"); $("m-rep").setAttribute("aria-pressed", false); }
   if (prac && !practising) readPage = currentPage();
   practising = prac;

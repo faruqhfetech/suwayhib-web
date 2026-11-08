@@ -203,7 +203,7 @@ body.insessions #sessions { display: block; }
 .pstep.good { color: var(--ok); font-weight: 600; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
 /* recite from memory: words stay hidden until they are recited */
-#pverse.hidetext .w:not(.ok):not(.err):not(.slight), #rverse.hidetext .w:not(.ok):not(.err):not(.slight) { color: transparent; background: var(--surface-2); }
+#pverse.hidetext .w:not(.ok):not(.err):not(.slight), #lverse.hidetext .w:not(.cur), #rverse.hidetext .w:not(.ok):not(.err):not(.slight) { color: transparent; background: var(--surface-2); }
 #ptext[aria-pressed="true"], #rtext[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
 .wdots { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; direction: rtl; }
 .wdots:empty { display: none; }
@@ -218,7 +218,7 @@ details.opts summary { list-style: none; display: flex; align-items: center; gap
 details.opts summary::-webkit-details-marker { display: none; }
 details.opts[open] summary { color: var(--ink); }
 details.opts > .optrow { margin: var(--s2) 0; }
-#repeat.running .rsetup { display: none !important; }  /* while it runs: the verses, not the settings */
+#repeat.running .rsetup, #lcas.running .lsetup { display: none !important; }  /* while it runs: the verses, not the settings */
 #rcascc { display: grid; gap: var(--s3); }  /* the two cascade counts: same spacing as every other row */
 .rtally { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--muted); max-height: 9.5em; overflow: auto; }
 .rtally:empty { display: none; }
@@ -323,3 +323,9 @@ body.inweb #mine, body.inweb #reviewplay, body.inweb .switch { display: none !im
   .seg button { padding: 0 var(--s2); }
 }
 @media (prefers-reduced-motion: reduce) { .w, .v, .toast { transition: none; } .w.flash { animation: none; } #mic::after { transition: none; } }
+
+/* Practise: its two ways (Listen and repeat, Listening cascade) */
+.pmodes { margin: 0 0 var(--s3); }
+.row3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+.optnote { color: var(--muted); font-size: .9em; }
+#lverse .v.played .num { color: var(--accent); }

@@ -27,6 +27,7 @@
     <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
     <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
     <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12"/><circle cx="12" cy="12" r="3"/></symbol>
     <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
     <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></symbol>
@@ -86,7 +87,8 @@
 
 <!-- Practise: one verse, listen, then recite -->
 <section id="practice" class="panel" data-i18n-label="Practise a verse" aria-label="Practise a verse">
-  <div class="pcard">
+  <div class="optrow pmodes"><span class="seg wide" role="group" data-i18n-label="Mode" aria-label="Mode"><button id="pm-one" aria-pressed="true" data-i18n="Listen and repeat">Listen and repeat</button><button id="pm-casc" aria-pressed="false" data-i18n="Listening cascade">Listening cascade</button></span></div>
+  <div class="pcard" id="plr">
     <div class="phead">
       <button class="icon-btn" id="pnext" data-i18n-label="Next verse" aria-label="Next verse" title="Next verse"><svg class="i"><use href="#i-left"/></svg></button>
       <div class="ptitle"><div class="ptitle-ar" id="pname"></div><div class="pmeta" id="pref"></div></div>
@@ -110,6 +112,34 @@
         <span class="optlabel" data-i18n="times">times</span></div>
       <div class="optrow"><button id="ptext" aria-pressed="false"><svg class="i"><use href="#i-eye"/></svg><span data-i18n="Hide text">Hide text</span></button>
         <button id="plisten"><svg class="i"><use href="#i-play"/></svg><span data-i18n="Listen once">Listen once</span></button></div>
+    </details>
+  </div>
+  <!-- Listening cascade: the reciter plays a range, a verse at a time and then all so far (listen.js) -->
+  <div class="pcard" id="lcas" hidden>
+    <div class="phead"><div class="ptitle"><div class="ptitle-ar" id="lname"></div><div class="pmeta" id="lref"></div></div></div>
+    <div class="optrow lsetup"><span class="optlabel" data-i18n="Surah">Surah</span> <select id="lsura" data-i18n-label="Surah" aria-label="Surah"></select></div>
+    <div class="optrow lsetup"><span class="optlabel" data-i18n="From verse">From verse</span> <span class="stepper"><button class="icon-btn" data-for="lfrom" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="lfrom" type="number" min="1" max="99" inputmode="numeric"><button class="icon-btn" data-for="lfrom" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span></div>
+    <div class="optrow lsetup"><span class="optlabel" data-i18n="To verse">To verse</span> <span class="stepper"><button class="icon-btn" data-for="lto" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="lto" type="number" min="1" max="99" inputmode="numeric"><button class="icon-btn" data-for="lto" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span></div>
+    <div class="optrow lsetup"><span class="seg wide" role="group" data-i18n-label="Mode" aria-label="Mode"><button id="lm-loop" aria-pressed="false" data-i18n="Loop">Loop</button><button id="lm-casc" aria-pressed="true" data-i18n="Cascade">Cascade</button></span></div>
+    <div class="mcap lsetup" id="lcap"></div>
+    <div class="optrow lsetup" id="lloopc"><span class="optlabel" data-i18n="Times">Times</span> <span class="stepper"><button class="icon-btn" data-for="lrounds" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="lrounds" type="number" min="1" max="99" inputmode="numeric"><button class="icon-btn" data-for="lrounds" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span></div>
+    <div class="lsetup" id="lcascc">
+      <div class="optrow"><span class="optlabel" data-i18n="Each verse">Each verse</span> <span class="stepper"><button class="icon-btn" data-for="lper" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="lper" type="number" min="1" max="99" inputmode="numeric"><button class="icon-btn" data-for="lper" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span></div>
+      <div class="optrow"><span class="optlabel" data-i18n="Together">Together</span> <span class="stepper"><button class="icon-btn" data-for="ljoint" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="ljoint" type="number" min="1" max="99" inputmode="numeric"><button class="icon-btn" data-for="ljoint" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span></div>
+    </div>
+    <div class="optrow lsetup"><span class="optlabel" data-i18n="Pause between (s)">Pause between (s)</span> <span class="stepper"><button class="icon-btn" data-for="lgap" data-d="-1" aria-label="−"><svg class="i"><use href="#i-minus"/></svg></button><input id="lgap" type="number" min="0" max="5" inputmode="numeric"><button class="icon-btn" data-for="lgap" data-d="1" aria-label="+"><svg class="i"><use href="#i-plus"/></svg></button></span></div>
+    <button class="primary wide" id="lstart"><svg class="i"><use href="#i-play"/></svg><span data-i18n="Start listening">Start listening</span></button>
+    <div class="row3" id="lrun" hidden>
+      <button id="lpause"><svg class="i"><use href="#i-pause"/></svg><span data-i18n="Pause">Pause</span></button>
+      <button id="lskip"><span data-i18n="Skip">Skip</span></button>
+      <button id="lreset"><svg class="i"><use href="#i-practise"/></svg><span data-i18n="Start over">Start over</span></button>
+    </div>
+    <div class="pstep" id="lstep"></div>
+    <div class="quran" id="lverse"></div>
+    <details class="opts">
+      <summary><svg class="i"><use href="#i-sliders"/></svg><span data-i18n="Options">Options</span></summary>
+      <div class="optrow"><span class="optlabel" data-i18n="Reciter">Reciter</span> <span class="optnote" data-i18n="Same reciter as Listen and repeat.">Same reciter as Listen and repeat.</span></div>
+      <div class="optrow"><button id="ltext" aria-pressed="false"><svg class="i"><use href="#i-eye"/></svg><span data-i18n="Hide text">Hide text</span></button></div>
     </details>
   </div>
   <p class="pfoot" data-i18n="Automatic feedback can be wrong; it does not replace your teacher.">Automatic feedback can be wrong; it does not replace your teacher.</p>
@@ -240,6 +270,7 @@
 <script src="static/js/panels.js"></script>
 <script src="static/js/practise.js"></script>
 <script src="static/js/repeat.js"></script>
+<script src="static/js/listen.js"></script>
 <script src="static/js/settings.js"></script>
 <script src="static/js/audio.js"></script>
 </body>
