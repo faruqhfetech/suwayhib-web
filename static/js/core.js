@@ -15,7 +15,7 @@ const store = {  // localStorage that never throws (private mode, blocked storag
 function connect() {
   ws = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws`);
   ws.binaryType = "arraybuffer";
-  ws.onopen = () => { status("Ready — tap 🎙 and recite"); const pc = store.get("suwayhib.pace", "any"); if (pc !== "any") ws.send(JSON.stringify({ type: "pace", pace: pc })); };
+  ws.onopen = () => { status("Ready — tap 🎙 and recite"); const pc = store.get("suwayhib.pace", "any"); if (pc !== "any") ws.send(JSON.stringify({ type: "pace", pace: pc })); if (typeof sendStrict === "function") sendStrict(); };
   ws.onclose = () => { status("Not connected — retrying…"); setTimeout(connect, 1500); };
   ws.onmessage = (ev) => {
     const m = JSON.parse(ev.data);

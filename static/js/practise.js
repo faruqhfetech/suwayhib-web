@@ -26,7 +26,7 @@ function setSection(prac, verseGiven) {
   if (prac) { $("readopts").hidden = true; $("readopts-btn").setAttribute("aria-expanded", false); }
   $("m-read").setAttribute("aria-pressed", !prac); $("m-prac").setAttribute("aria-pressed", prac); $("m-sess").setAttribute("aria-pressed", false);
   P.run++; P.queue = null;  // stop practise audio/replays; a queue is set again by "Practise these"
-  stopAll(); stopRef(); hideSheet(); send({ type: "reset" });
+  stopAll(); stopRef(); hideSheet(); send({ type: "reset" }); if (typeof sendStrict === "function") sendStrict();
   if (prac) {
     if (!verseGiven) {
       const pos = store.get("suwayhib.pos", null);

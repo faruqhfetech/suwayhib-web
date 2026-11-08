@@ -71,7 +71,23 @@ function stopAll() {
   srcNode?.disconnect(); stream?.getTracks().forEach((t) => t.stop()); fileSrc?.stop(); fileSrc = null;
   micOn(false);
 }
-$("mic").onclick = () => (running ? stopAll() : startMic().catch((e) => status(t("Microphone: {x}", { x: e.message }))));
+let holdT = null, held = false;
+$("mic").addEventListener("pointerdown", () => {
+  held = false; $("mic").classList.add("holding");
+  holdT = setTimeout(() => {
+    held = true; $("mic").classList.remove("holding");
+    if (running) stopAll();
+    navigator.vibrate?.(60);
+    clearAllColours();
+  }, 3000);
+});
+const holdEnd = () => { clearTimeout(holdT); $("mic").classList.remove("holding"); };
+["pointerup", "pointerleave", "pointercancel"].forEach((k) => $("mic").addEventListener(k, holdEnd));
+$("mic").addEventListener("contextmenu", (e) => e.preventDefault());  // a long press is ours, not the browser's menu
+$("mic").onclick = () => {
+  if (held) { held = false; return; }  // that press was the 3 s hold
+  running ? stopAll() : startMic().catch((e) => status(t("Microphone: {x}", { x: e.message })));
+};
 
 async function playBuffers(bufs, label) {
   stopAll(); ensureSession(); await ensureCtx(); await ctx.resume();

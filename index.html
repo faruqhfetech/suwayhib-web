@@ -65,13 +65,15 @@
   <div class="mcap" id="hzcap"></div>
   <div class="optrow"><span class="optlabel" data-i18n="View">View</span>
     <span class="seg" role="group" data-i18n-label="Layout" aria-label="Layout"><button id="lay-pages" aria-pressed="false" data-i18n="Pages">Pages</button><button id="lay-scroll" aria-pressed="true" data-i18n="Scroll">Scroll</button></span>
-    <button class="ghost" id="reset" data-i18n="Clear all colours">Clear all colours</button></div>
+  </div>
+  <div class="mcap" data-i18n="Hold the mic for 3 seconds to clear all colours.">Hold the mic for 3 seconds to clear all colours.</div>
 </div>
 
 <!-- the menu: app-wide settings only -->
 <div class="menu" id="menu">
   <div class="menurow"><span data-i18n="Language">Language</span> <select id="lang" data-i18n-label="Language" aria-label="Language"><option value="en">English</option><option value="ha">Hausa</option><option value="ar">العربية</option></select></div>
   <div class="menurow"><span data-i18n="Pace">Pace</span> <select id="pace" data-i18n-label="Pace" aria-label="Pace"><option value="any" data-i18n="Any valid pace">Any valid pace</option><option value="hadr" data-i18n="Ḥadr (fast)">Ḥadr (fast)</option><option value="tadwir" data-i18n="Tadwīr (medium)">Tadwīr (medium)</option><option value="tahqiq" data-i18n="Taḥqīq (slow)">Taḥqīq (slow)</option></select></div>
+  <label class="menurow switchrow"><span><span data-i18n="Strict order">Strict order</span><br><small class="mcap" data-i18n="A missed or wrong word must be said before moving on.">A missed or wrong word must be said before moving on.</small></span> <input type="checkbox" id="strict"></label>
   <button class="ghost" id="theme"><svg class="i"><use href="#i-theme"/></svg><span data-i18n="Light / dark">Light / dark</span></button>
   <button class="ghost" id="downloads" hidden><svg class="i"><use href="#i-download"/></svg><span data-i18n="Downloads">Downloads</span></button>
   <button class="ghost" id="help"><svg class="i"><use href="#i-help"/></svg><span data-i18n="How it works">How it works</span></button>

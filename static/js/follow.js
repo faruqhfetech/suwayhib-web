@@ -6,6 +6,20 @@ function handle(m) {
     case "status": status(m.text); break;
     case "page": renderPage(m); if (!inPanel()) showPage(m.page); break;
     case "located": toast(t("Found you — {x}", { x: `${surahName(m.sura)} ${m.aya}` })); break;
+    case "heard":  // recited before the place was found: followed, not judged word by word
+      for (const w of m.words) { const el = wsel(m.sura, m.aya, w); if (el && !el.matches(".ok, .err, .slight")) el.classList.add("heard"); }
+      break;
+    case "skipped": showSkipped(m); break;
+    case "hold": {  // strict order: this word first
+      root().querySelectorAll(".w.need").forEach((x) => x.classList.remove("need"));
+      const el = wsel(m.sura, m.aya, m.word);
+      if (el) { el.classList.add("need"); el.scrollIntoView?.({ block: "nearest", behavior: "smooth" }); }
+      toast(t(m.tries > 1 ? "Try that word again: {w}" : "Go back to: {w}", { w: m.text }));
+      navigator.vibrate?.([40, 60, 40]);
+      break;
+    }
+    case "hold_done": root().querySelectorAll(".w.need").forEach((x) => x.classList.remove("need")); break;
+    case "strict": break;
     case "verse": if (practising && P.done) break; setVerse(m.sura, m.aya); setCursor(m.sura, m.basmala ? 0 : m.aya, m.word); status(`${surahName(m.sura)} ${m.aya}`); break;
     case "cursor": setCursor(m.sura, m.aya, m.word); break;
     case "word": {
@@ -14,7 +28,7 @@ function handle(m) {
       const cls = m.status === "error" ? "err" : m.status === "slight" ? "slight" : "ok";
       for (const w of words(m)) {
         const el = wsel(m.sura, m.aya, w);
-        if (el) { el.classList.remove("err", "slight", "ok", "cur"); el.classList.add(cls); }
+        if (el) { el.classList.remove("err", "slight", "ok", "cur", "heard", "miss"); el.classList.add(cls); if (m.skipped) el.classList.add("miss"); }
         mark(m.sura, m.aya, w, m.status, m);
         if (practising) { const d = $("pdots").children[w]; if (d) d.className = cls; }
       }
@@ -39,6 +53,7 @@ function handle(m) {
     }
     case "note": {
       if (m.kind === "tawbah_basmala") { toast("at-Tawbah is recited without the basmala"); break; }
+      if (m.kind === "strict_pass") { toast("Moving on — practise that word with your teacher"); root().querySelectorAll(".w.need").forEach((x) => x.classList.remove("need")); break; }
       if (m.kind === "mixed_pace") { toast("Your madd lengths changed within this verse — try to keep one pace"); break; }
       const el = wsel(m.sura, m.aya, m.word);
       if (el && !el.querySelector(".rep")) { const d = document.createElement("span"); d.className = "rep"; d.title = "repeated"; el.appendChild(d); }
@@ -57,6 +72,30 @@ function handle(m) {
       root().querySelectorAll(".w.cur").forEach((e) => e.classList.remove("cur")); verse = null; break;
     case "lag": if (DEV) { $("lag").textContent = `${m.ms} ms`; setTimeout(() => ($("lag").textContent = ""), 2000); } break;
   }
+}
+
+// ---------- a stretch left out: marked, with a way back to it ----------
+function showSkipped(m) {
+  // every word from where they were up to where they picked up again
+  const all = [...root().querySelectorAll(".w")];
+  const key = (el) => [+el.dataset.s, +el.dataset.a, +el.dataset.w];
+  const lt = (x, y) => x[0] !== y[0] ? x[0] < y[0] : x[1] !== y[1] ? x[1] < y[1] : x[2] < y[2];
+  const from = [m.from.sura, m.from.aya, m.from.word], to = [m.to.sura, m.to.aya, m.to.word];
+  for (const el of all) {
+    const k = key(el);
+    if (!lt(k, from) && lt(k, to) && !el.matches(".ok, .err, .slight")) el.classList.add("err", "miss");
+  }
+  let bar = $("skipbar");
+  if (!bar) {
+    bar = document.createElement("div"); bar.id = "skipbar"; bar.setAttribute("role", "status");
+    document.body.appendChild(bar);
+  }
+  bar.innerHTML = `<span>${t("You skipped from {x}", { x: `${m.from.sura}:${m.from.aya}` })}</span>
+    <button class="primary" id="skipgo">${t("Go back")}</button><button class="icon-btn ghost" id="skipno" aria-label="${t("Close")}">✕</button>`;
+  bar.hidden = false;
+  clearTimeout(showSkipped._t); showSkipped._t = setTimeout(() => (bar.hidden = true), 10000);
+  $("skipgo").onclick = () => { bar.hidden = true; send({ type: "start_at", sura: m.from.sura, aya: m.from.aya, word: m.from.word }); };
+  $("skipno").onclick = () => { bar.hidden = true; };
 }
 
 // ---------- the sheet: what a red/amber word should be, and how it sounds ----------

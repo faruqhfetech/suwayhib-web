@@ -16,6 +16,11 @@ for (const v of ["off", "first", "ends", "hide"]) $(`hz-${v}`).onclick = () => s
 function peek(el) {  // a hidden word, tapped: show it for a moment
   el.classList.add("peek"); clearTimeout(el._pk); el._pk = setTimeout(() => el.classList.remove("peek"), 1800);
 }
+let strictOn = store.get("suwayhib.strict", true);
+$("strict").checked = strictOn;
+// Practise has its own tries and replays, so strict order applies to Read and Repeat only
+function sendStrict() { send({ type: "strict", on: strictOn && !practising }); }
+$("strict").onchange = (e) => { strictOn = e.target.checked; store.set("suwayhib.strict", strictOn); sendStrict(); };
 let pace = store.get("suwayhib.pace", "any");
 $("pace").value = pace;
 $("pace").onchange = (e) => { pace = e.target.value; store.set("suwayhib.pace", pace); send({ type: "pace", pace }); };

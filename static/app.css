@@ -92,7 +92,13 @@ body.paged.reading .readopts { position: static; flex: none; box-shadow: none; }
 /* memorise: words stay hidden (or show only first/last words) until recited */
 body.hz-hide #pages .w:not(.ok):not(.err):not(.slight):not(.peek),
 body.hz-first #pages .w:not(.ok):not(.err):not(.slight):not(.peek):not(.first),
-body.hz-ends #pages .w:not(.ok):not(.err):not(.slight):not(.peek):not(.first):not(.last) { color: transparent; background: var(--surface-2); }
+body.hz-ends #pages .w:not(.ok):not(.err):not(.slight):not(.peek):not(.first):not(.last),
+#pverse.hidetext .w:not(.ok):not(.err):not(.slight), #lverse.hidetext .w:not(.cur), #rverse.hidetext .w:not(.ok):not(.err):not(.slight) {
+  /* a hidden word: a short line where it sits, not a filled box (the Qur'an font's box is much
+     taller than its line, so a filled background turns every hidden word into a blob that
+     runs into the lines above and below) */
+  color: transparent; background: linear-gradient(transparent 66%, var(--line) 66%, var(--line) 72%, transparent 72%);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .w.peek { outline: 1px dashed var(--muted); }
 
 /* --- the mushaf --- */
@@ -203,7 +209,6 @@ body.insessions #sessions { display: block; }
 .pstep.good { color: var(--ok); font-weight: 600; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
 /* recite from memory: words stay hidden until they are recited */
-#pverse.hidetext .w:not(.ok):not(.err):not(.slight), #lverse.hidetext .w:not(.cur), #rverse.hidetext .w:not(.ok):not(.err):not(.slight) { color: transparent; background: var(--surface-2); }
 #ptext[aria-pressed="true"], #rtext[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
 .wdots { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; direction: rtl; }
 .wdots:empty { display: none; }
@@ -331,3 +336,21 @@ button.danger { color: var(--err); }
 .dlsum { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--s2) var(--s3); padding: var(--s3);
   background: var(--surface-2); border-radius: var(--r-md); margin-bottom: var(--s3); }
 .dlsum div { display: grid; gap: 2px; } .dlsum p { grid-column: 1 / -1; margin: 0; font-size: 13px; }
+
+/* heard before the place was found: followed, not judged */
+.w.heard { color: var(--ok); opacity: .6; }
+/* skipped: never said (red, with a dashed line instead of the wavy one) */
+.w.err.miss { text-decoration: underline dashed var(--err); text-decoration-thickness: 2px; text-underline-offset: 7px; background: none; }
+/* strict order: the word to go back to */
+.w.need { animation: need 1.2s ease-in-out infinite; border-radius: 6px; }
+@keyframes need { 0%,100% { box-shadow: inset 0 -3px 0 var(--err); } 50% { box-shadow: inset 0 -3px 0 transparent; background: var(--err-bg); } }
+@media (prefers-reduced-motion: reduce) { .w.need { animation: none; box-shadow: inset 0 -3px 0 var(--err); } }
+#skipbar { position: fixed; left: 12px; right: 12px; bottom: calc(150px + env(safe-area-inset-bottom)); z-index: 25; max-width: 520px; margin: 0 auto;
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--card); border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--err); border-radius: 16px; box-shadow: var(--shadow); }
+#skipbar span { flex: 1; }
+/* holding the mic: a ring fills over 3 s, then all colours are cleared */
+#mic.holding::after { opacity: 1; border-color: var(--err); animation: holdfill 3s linear forwards; }
+@keyframes holdfill { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.switchrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; }
+.switchrow small { display: block; margin: 0; }

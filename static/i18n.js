@@ -161,6 +161,15 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "Taɓa 🎙 Lokacina idan ka shirya.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "Komai yana faruwa a wannan na'ura; ba a aika karatunka ko'ina, ba a kuma adana shi.",
     "A companion between lessons — not a replacement for your teacher.": "Abokin bita tsakanin darussa — ba madadin malaminka ba.",
+    "Hold the mic for 3 seconds to clear all colours.": "Riƙe makirufo na daƙiƙa 3 don share dukan launuka.",  // DRAFT: please correct
+    "All colours cleared": "An share dukan launuka",  // DRAFT: please correct
+    "Strict order": "Tsari mai tsanani",  // DRAFT: please correct
+    "A missed or wrong word must be said before moving on.": "Dole a faɗi kalmar da aka tsallake ko aka yi kuskure kafin a ci gaba.",  // DRAFT: please correct
+    "Go back to: {w}": "Koma zuwa: {w}",  // DRAFT: please correct
+    "Try that word again: {w}": "Sake gwada wannan kalmar: {w}",  // DRAFT: please correct
+    "Moving on — practise that word with your teacher": "Ana ci gaba — ka gwada wannan kalmar tare da malaminka",  // DRAFT: please correct
+    "You skipped from {x}": "Ka tsallake daga {x}",  // DRAFT: please correct
+    "Go back": "Koma baya",  // DRAFT: please correct
     "Install app": "Saka manhaja",  // DRAFT: please correct
     "Install Suwayhib": "Saka Suwayhib",  // DRAFT: please correct
     "Install": "Saka",  // DRAFT: please correct
@@ -326,6 +335,15 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "اضغط 🎙 دوري حين تستعد.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "كل شيء يجري على هذا الجهاز؛ لا تُرسل تلاوتك إلى أي مكان ولا تُحفظ.",
     "A companion between lessons — not a replacement for your teacher.": "رفيق بين الدروس — لا يغني عن شيخك.",
+    "Hold the mic for 3 seconds to clear all colours.": "اضغط مطولًا على الميكروفون 3 ثوانٍ لمسح كل الألوان.",
+    "All colours cleared": "مُسحت كل الألوان",
+    "Strict order": "الترتيب الصارم",
+    "A missed or wrong word must be said before moving on.": "يجب قراءة الكلمة الفائتة أو الخاطئة قبل المتابعة.",
+    "Go back to: {w}": "ارجع إلى: {w}",
+    "Try that word again: {w}": "أعد هذه الكلمة: {w}",
+    "Moving on — practise that word with your teacher": "نتابع — تدرّب على هذه الكلمة مع شيخك",
+    "You skipped from {x}": "تخطيت من {x}",
+    "Go back": "ارجع",
     "Install app": "تثبيت التطبيق",
     "Install Suwayhib": "ثبّت صُوَيْهِب",
     "Install": "تثبيت",

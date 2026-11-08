@@ -273,15 +273,15 @@ $("dlclose").onclick = closeOverlays;
 // ---------- menu ----------
 $("more").onclick = (e) => { e.stopPropagation(); $("menu").classList.toggle("show"); };
 addEventListener("click", (e) => { if (!e.target?.closest?.("#menu")) $("menu").classList.remove("show"); });
-$("reset").onclick = async () => {
-  $("menu").classList.remove("show");
-  if (!(await ask("Clear all colours and saved progress on this device?"))) return;
+// clear all colours: hold the mic for 3 seconds (audio.js); holding that long is the confirmation
+function clearAllColours() {
   send({ type: "reset" }); hideSheet(); verse = null;
-  document.querySelectorAll(".w").forEach((x) => x.classList.remove("ok", "err", "slight", "cur"));
+  document.querySelectorAll(".w").forEach((x) => x.classList.remove("ok", "err", "slight", "cur", "heard", "miss", "need"));
   root().querySelectorAll(".v.current").forEach((x) => x.classList.remove("current"));
   document.querySelectorAll(".num.done").forEach((x) => x.classList.remove("done"));
   for (const k in flagged) delete flagged[k];
   for (const k in marks) delete marks[k];
   store.del("suwayhib.marks"); store.del("suwayhib.flagged"); store.del("suwayhib.pos");
   $("where").textContent = "";
-};
+  toast(t("All colours cleared"));
+}
