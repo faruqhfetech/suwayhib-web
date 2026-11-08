@@ -20,11 +20,11 @@ const say = (text) => postMessage({ t: "progress", text });
 // whole to sherpa's loader instead of letting it fetch one big file.
 let rec = null, stream = null, emitted = 0;
 async function fetchModel() {
-  const { parts, size } = await (await fetch("sherpa/parts.json")).json();
+  const { parts, size, version } = await (await fetch("sherpa/parts.json", { cache: "no-cache" })).json();
   const data = new Uint8Array(size);
   let at = 0;
   for (const p of parts) {
-    const b = new Uint8Array(await (await fetch("sherpa/" + p)).arrayBuffer());
+    const b = new Uint8Array(await (await fetch(`sherpa/${p}?v=${version}`)).arrayBuffer());
     data.set(b, at); at += b.length;
     say(`Downloading the recitation model… ${Math.round(100 * at / size)}%`);
   }
