@@ -4,8 +4,8 @@
 //   change at the same URL: the model parts carry a version (?v=, see worker.js), the engine and
 //   Pyodide are pinned versions.
 // build.py fills in VERSION and SHELL.
-const VERSION = "4dcb6c947a09";
-const SHELL = ["./", "index.html", "bridge.js", "worker.js", "manifest.webmanifest", "sherpa/parts.json", "sherpa/sherpa-onnx-wasm-main-asr.js", "sherpa/sherpa-onnx-asr.js", "static/app.css", "static/fonts/AmiriQuran.woff2", "static/fonts/OFL.txt", "static/i18n.js", "static/icons/icon-192.png", "static/icons/icon-512.png", "static/icons/maskable-192.png", "static/icons/maskable-512.png", "static/index.html", "static/js/audio.js", "static/js/core.js", "static/js/follow.js", "static/js/listen.js", "static/js/mushaf.js", "static/js/panels.js", "static/js/practise.js", "static/js/repeat.js", "static/js/settings.js", "py/app.zip", "py/quran_transcript-0.6.1-py3-none-any.whl", "py/wheels.json", "py/xmltodict-1.0.4-py3-none-any.whl"];
+const VERSION = "25ae3a9a741a";
+const SHELL = ["./", "index.html", "bridge.js", "worker.js", "manifest.webmanifest", "sherpa/parts.json", "sherpa/sherpa-onnx-wasm-main-asr.js", "sherpa/sherpa-onnx-asr.js", "static/app.css", "static/fonts/AmiriQuran.woff2", "static/fonts/OFL.txt", "static/i18n.js", "static/icons/icon-192.png", "static/icons/icon-512.png", "static/icons/maskable-192.png", "static/icons/maskable-512.png", "static/index.html", "static/js/audio.js", "static/js/core.js", "static/js/follow.js", "static/js/howto.js", "static/js/listen.js", "static/js/mushaf.js", "static/js/panels.js", "static/js/practise.js", "static/js/repeat.js", "static/js/settings.js", "py/app.zip", "py/quran_transcript-0.6.1-py3-none-any.whl", "py/wheels.json", "py/xmltodict-1.0.4-py3-none-any.whl"];
 const APP = `suwayhib-app-${VERSION}`;
 const HEAVY = "suwayhib-heavy";
 

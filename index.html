@@ -79,6 +79,7 @@
   <button class="ghost" id="help"><svg class="i"><use href="#i-help"/></svg><span data-i18n="How it works">How it works</span></button>
   <label class="filebtn ghost" id="filebtn" hidden><svg class="i"><use href="#i-headphones"/></svg><span data-i18n="Play a recording">Play a recording</span><input type="file" id="file" accept="audio/*"></label>
   <span id="demoslot"></span>
+  <button class="ghost" id="howtobtn"><svg class="i"><use href="#i-book"/></svg><span data-i18n="How to use Suwayhib">How to use Suwayhib</span></button>
 </div>
 
 <div class="banner" id="micdenied" hidden data-i18n="The microphone is blocked. Allow it for this page in Chrome: tap the lock icon next to the address, then Permissions → Microphone → Allow.">The microphone is blocked. Allow it for this page in Chrome: tap the lock icon next to the address, then Permissions → Microphone → Allow.</div>
@@ -247,6 +248,10 @@
 </div></div>
 
 
+<div class="overlay" id="howtobox"><div class="dialog" role="dialog" data-i18n-label="How to use Suwayhib" aria-label="How to use Suwayhib">
+  <div class="head"><b style="flex:1" data-i18n="How to use Suwayhib">How to use Suwayhib</b><button class="icon-btn ghost" id="howtoclose" data-i18n-label="Close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="list" id="howtolist" style="padding: var(--s2) var(--s3) var(--s3)"></div>
+</div></div>
 <div class="overlay" id="dlbox"><div class="dialog" role="dialog" data-i18n-label="Downloads" aria-label="Downloads">
   <div class="head"><b style="flex:1" data-i18n="Downloads">Downloads</b><button class="icon-btn ghost" id="dlclose" data-i18n-label="Close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="list" id="dllist" style="padding: 0 var(--s3)"></div>
@@ -274,6 +279,7 @@
 <script src="static/js/repeat.js"></script>
 <script src="static/js/listen.js"></script>
 <script src="static/js/settings.js"></script>
+<script src="static/js/howto.js"></script>
 <script src="static/js/audio.js"></script>
 </body>
 </html>

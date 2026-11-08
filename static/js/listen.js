@@ -24,11 +24,12 @@ function lPlan() {
 }
 
 // ---------- which of Practise's two ways ----------
-function setPracMode(m) {
+function setPracMode(m, first = false) {
   if (m === "cascade" && NOREF) m = "one";  // it needs the reciters' audio
   store.set("suwayhib.pmode", m);
   $("pm-one").setAttribute("aria-pressed", m === "one"); $("pm-casc").setAttribute("aria-pressed", m === "cascade");
   $("plr").hidden = m !== "one"; $("lcas").hidden = m !== "cascade";
+  if (first) return;  // at load: just show the remembered mode (audio.js, with stopAll, is not loaded yet)
   if (m === "cascade") { stopAll(); stopRef(); P.run++; send({ type: "reset" }); lClamp(); }
   else lStop();
 }
@@ -206,4 +207,4 @@ $("lskip").onclick = () => {
 $("lreset").onclick = () => { lStop(); lClamp(); lstep(t("Choose the verses, then Start listening.")); };
 
 lSetMode(L.mode); lFillSurahs();
-setPracMode(store.get("suwayhib.pmode", "one"));
+setPracMode(store.get("suwayhib.pmode", "one"), true);

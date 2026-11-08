@@ -354,3 +354,12 @@ button.danger { color: var(--err); }
 @keyframes holdfill { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 .switchrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; }
 .switchrow small { display: block; margin: 0; }
+
+/* How to use Suwayhib: one fold-out section per feature */
+.howto { border-bottom: 1px solid var(--line); }
+.howto summary { display: flex; align-items: center; gap: var(--s2); min-height: 48px; cursor: pointer; font-weight: 600; list-style: none; }
+.howto summary::-webkit-details-marker { display: none; }
+.howto summary::after { content: "+"; margin-inline-start: auto; color: var(--muted); font-weight: 400; font-size: 20px; }
+.howto[open] summary::after { content: "−"; }
+.howto ul { margin: 0 0 var(--s3); padding-inline-start: 1.2em; color: var(--ink); line-height: 1.55; }
+.howto li { margin: 4px 0; }

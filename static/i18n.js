@@ -161,6 +161,39 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "Taɓa 🎙 Lokacina idan ka shirya.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "Komai yana faruwa a wannan na'ura; ba a aika karatunka ko'ina, ba a kuma adana shi.",
     "A companion between lessons — not a replacement for your teacher.": "Abokin bita tsakanin darussa — ba madadin malaminka ba.",
+    "How to use Suwayhib": "Yadda ake amfani da Suwayhib",  // DRAFT: please correct
+    "Tap the microphone and recite from anywhere in the Qur'an. Suwayhib finds the verse within a few seconds and opens its page.": "Taɓa makirufo ka karanta daga ko'ina cikin Alƙur'ani. Suwayhib zai gano ayar cikin 'yan daƙiƙoƙi ya buɗe shafinta.",  // DRAFT: please correct
+    "Or double-tap any word to start exactly there.": "Ko ka taɓa kowace kalma sau biyu don farawa daidai daga nan.",  // DRAFT: please correct
+    "Tap the microphone again to stop. A session is saved 15 seconds after you stop.": "Sake taɓa makirufo don tsayawa. Ana ajiye zama daƙiƙa 15 bayan ka tsaya.",  // DRAFT: please correct
+    "Green: said correctly.": "Kore: an faɗa daidai.",  // DRAFT: please correct
+    "Red: a clear mistake. A dashed red line means the word was skipped.": "Ja: kuskure bayyananne. Layin ja mai yanke-yanke yana nufin an tsallake kalmar.",  // DRAFT: please correct
+    "Amber: a tajweed detail to polish, such as the length of a madd.": "Ruwan ɗorawa: wani bayani na tajwidi da za a gyara, kamar tsawon madda.",  // DRAFT: please correct
+    "Light green: recited before Suwayhib found your place.": "Kore mai haske: an karanta kafin Suwayhib ya gano inda kake.",  // DRAFT: please correct
+    "Tap a red or amber word to see what was expected and what was heard, and to hear the reciter say it.": "Taɓa kalma ja ko ruwan ɗorawa don ganin abin da ake tsammani da abin da aka ji, da kuma jin mai karatu yana faɗinta.",  // DRAFT: please correct
+    "Pausing and going back": "Tsayawa da komawa baya",  // DRAFT: please correct
+    "Pause whenever you need to, and go back as you would with a teacher, even into the previous verse. Suwayhib follows you, and a word you fix turns green.": "Ka tsaya duk lokacin da kake bukata, ka koma baya kamar yadda kake yi da malami, har zuwa ayar da ta gabata. Suwayhib zai bi ka, kuma kalmar da ka gyara za ta zama kore.",  // DRAFT: please correct
+    "If you skip a verse, Suwayhib marks it and offers to take you back.": "Idan ka tsallake aya, Suwayhib zai yi mata alama ya kuma ba ka damar komawa.",  // DRAFT: please correct
+    "When it is on, a skipped or wrong word pulses, and you are asked to go back to it before carrying on.": "Idan yana kunne, kalmar da aka tsallake ko aka yi kuskure za ta yi ƙyalli, kuma za a ce ka koma gare ta kafin ka ci gaba.",  // DRAFT: please correct
+    "After three tries it lets you move on, and leaves the word for your teacher.": "Bayan gwaji uku zai bar ka ka ci gaba, ya bar kalmar ga malaminka.",  // DRAFT: please correct
+    "Turn it off in ⋯ → Strict order.": "Kashe shi a ⋯ → Tsari mai tsanani.",  // DRAFT: please correct
+    "The sliders button at the top: Pages (one page at a time, swipe to turn) or Scroll.": "Maɓallin zaɓuɓɓuka a sama: Shafuka (shafi ɗaya a lokaci guda, ja don juyawa) ko Gungurawa.",  // DRAFT: please correct
+    "Memorise: show only the first word, the first and last words, or hide the text. Tap a hidden word to peek.": "Haddacewa: nuna kalmar farko kawai, kalmomin farko da na ƙarshe, ko ɓoye rubutu. Taɓa kalmar da aka ɓoye don leƙawa.",  // DRAFT: please correct
+    "To clear all colours, hold the microphone for 3 seconds.": "Don share dukan launuka, riƙe makirufo na daƙiƙa 3.",  // DRAFT: please correct
+    "Listen and repeat: the reciter plays one verse a few times, then it is your turn. Mistakes are played back so you can hear the difference.": "Saurara ka maimaita: mai karatu zai karanta aya ɗaya sau kaɗan, sannan lokacinka ne. Ana sake kunna kurakurai don ka ji bambanci.",  // DRAFT: please correct
+    "Listening cascade: the reciter plays a range of verses, each verse on its own and then everything so far together.": "Saurare a jere: mai karatu zai karanta ayoyi, kowace aya ita kaɗai sannan duk abin da ya gabata tare.",  // DRAFT: please correct
+    "Recite a range of verses again and again, for memorising and revision.": "Karanta wasu ayoyi akai-akai, don haddacewa da bita.",  // DRAFT: please correct
+    "Loop repeats the whole range. Cascade builds it up: each verse, then everything so far.": "Zagaye yana maimaita dukan ayoyin. A jere yana ginawa: kowace aya, sannan duk abin da ya gabata.",  // DRAFT: please correct
+    "Double-tap a word to carry on from there. Start over at any time.": "Taɓa kalma sau biyu don ci gaba daga nan. Fara sabo a kowane lokaci.",  // DRAFT: please correct
+    "Every sitting is saved on this device, with its colours and, if you allow it, your recording.": "Ana ajiye kowane zama a wannan na'ura, tare da launukansa da kuma, idan ka yarda, rikodinka.",  // DRAFT: please correct
+    "Review a session to see your mistakes, hear yourself, or practise the verses you found hard. Repeat sessions can be repeated again.": "Duba zama don ganin kurakuranka, jin kanka, ko gwada ayoyin da suka yi maka wuya. Ana iya sake maimaita zaman maimaitawa.",  // DRAFT: please correct
+    "Pace and language": "Saurin karatu da harshe",  // DRAFT: please correct
+    "⋯ → Pace: any valid pace (default), or practise one of ḥadr, tadwīr or taḥqīq.": "⋯ → Saurin karatu: kowane sauri mai inganci (na asali), ko gwada ɗaya daga ḥadr, tadwīr ko taḥqīq.",  // DRAFT: please correct
+    "⋯ → Language: English, Hausa or Arabic. ⋯ → Light / dark.": "⋯ → Harshe: Turanci, Hausa ko Larabci. ⋯ → Haske / duhu.",  // DRAFT: please correct
+    "Downloads and offline use": "Saukewa da amfani ba tare da intanet ba",  // DRAFT: please correct
+    "In the phone app and on the website, a reciter's verse is kept on your device the first time it plays. ⋯ → Downloads shows what is kept, and lets you delete it.": "A manhajar waya da kuma shafin yanar gizo, ana ajiye ayar mai karatu a na'urarka a karon farko da aka kunna ta. ⋯ → Saukewa yana nuna abin da aka ajiye, kuma yana ba ka damar goge shi.",  // DRAFT: please correct
+    "On the website, everything works offline after the first visit. You can also install it as an app.": "A shafin yanar gizo, komai yana aiki ba tare da intanet ba bayan ziyarar farko. Hakanan zaka iya saka shi a matsayin manhaja.",  // DRAFT: please correct
+    "Good to know": "Abin da ya kamata a sani",  // DRAFT: please correct
+    "Everything runs on your device. Nothing you recite is sent anywhere.": "Komai yana gudana a na'urarka. Ba a aika abin da ka karanta ko'ina.",  // DRAFT: please correct
     "Hold the mic for 3 seconds to clear all colours.": "Riƙe makirufo na daƙiƙa 3 don share dukan launuka.",  // DRAFT: please correct
     "All colours cleared": "An share dukan launuka",  // DRAFT: please correct
     "Strict order": "Tsari mai tsanani",  // DRAFT: please correct
@@ -335,6 +368,39 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "اضغط 🎙 دوري حين تستعد.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "كل شيء يجري على هذا الجهاز؛ لا تُرسل تلاوتك إلى أي مكان ولا تُحفظ.",
     "A companion between lessons — not a replacement for your teacher.": "رفيق بين الدروس — لا يغني عن شيخك.",
+    "How to use Suwayhib": "طريقة استخدام صُوَيْهِب",
+    "Tap the microphone and recite from anywhere in the Qur'an. Suwayhib finds the verse within a few seconds and opens its page.": "اضغط على الميكروفون واقرأ من أي موضع في القرآن. يجد صُوَيْهِب الآية خلال ثوانٍ ويفتح صفحتها.",
+    "Or double-tap any word to start exactly there.": "أو انقر مرتين على أي كلمة لتبدأ منها.",
+    "Tap the microphone again to stop. A session is saved 15 seconds after you stop.": "اضغط على الميكروفون مرة أخرى للتوقف. تُحفظ الجلسة بعد 15 ثانية من التوقف.",
+    "Green: said correctly.": "الأخضر: قُرئت صحيحة.",
+    "Red: a clear mistake. A dashed red line means the word was skipped.": "الأحمر: خطأ جلي. الخط الأحمر المتقطع يعني أن الكلمة تُركت.",
+    "Amber: a tajweed detail to polish, such as the length of a madd.": "الكهرماني: تفصيل تجويدي يحتاج إلى إتقان، مثل طول المد.",
+    "Light green: recited before Suwayhib found your place.": "الأخضر الفاتح: قُرئ قبل أن يجد صُوَيْهِب موضعك.",
+    "Tap a red or amber word to see what was expected and what was heard, and to hear the reciter say it.": "اضغط على كلمة حمراء أو كهرمانية لترى المطلوب وما سُمع، ولتسمع القارئ ينطقها.",
+    "Pausing and going back": "التوقف والرجوع",
+    "Pause whenever you need to, and go back as you would with a teacher, even into the previous verse. Suwayhib follows you, and a word you fix turns green.": "توقف متى احتجت، وارجع كما تفعل مع الشيخ، حتى إلى الآية السابقة. يتبعك صُوَيْهِب، والكلمة التي تصححها تصير خضراء.",
+    "If you skip a verse, Suwayhib marks it and offers to take you back.": "إذا تخطيت آية، يعلّمها صُوَيْهِب ويعرض عليك الرجوع إليها.",
+    "When it is on, a skipped or wrong word pulses, and you are asked to go back to it before carrying on.": "عند تفعيله، تومض الكلمة المتروكة أو الخاطئة، ويُطلب منك الرجوع إليها قبل المتابعة.",
+    "After three tries it lets you move on, and leaves the word for your teacher.": "بعد ثلاث محاولات يتركك تتابع، ويترك الكلمة لشيخك.",
+    "Turn it off in ⋯ → Strict order.": "أوقفه من ⋯ ← الترتيب الصارم.",
+    "The sliders button at the top: Pages (one page at a time, swipe to turn) or Scroll.": "زر الخيارات في الأعلى: الصفحات (صفحة واحدة، اسحب للتقليب) أو التمرير.",
+    "Memorise: show only the first word, the first and last words, or hide the text. Tap a hidden word to peek.": "الحفظ: أظهر الكلمة الأولى فقط، أو الأولى والأخيرة، أو أخفِ النص. اضغط على كلمة مخفية لتلمحها.",
+    "To clear all colours, hold the microphone for 3 seconds.": "لمسح كل الألوان، اضغط مطولًا على الميكروفون 3 ثوانٍ.",
+    "Listen and repeat: the reciter plays one verse a few times, then it is your turn. Mistakes are played back so you can hear the difference.": "استمع وردّد: يقرأ القارئ آية واحدة بضع مرات، ثم يأتي دورك. تُعاد الأخطاء لتسمع الفرق.",
+    "Listening cascade: the reciter plays a range of verses, each verse on its own and then everything so far together.": "الاستماع المتدرّج: يقرأ القارئ مجموعة آيات، كل آية وحدها ثم كل ما سبق معًا.",
+    "Recite a range of verses again and again, for memorising and revision.": "اقرأ مجموعة آيات مرة بعد مرة، للحفظ والمراجعة.",
+    "Loop repeats the whole range. Cascade builds it up: each verse, then everything so far.": "التكرار يعيد المجموعة كلها. المتدرّج يبنيها: كل آية، ثم كل ما سبق.",
+    "Double-tap a word to carry on from there. Start over at any time.": "انقر مرتين على كلمة لتتابع منها. ابدأ من جديد متى شئت.",
+    "Every sitting is saved on this device, with its colours and, if you allow it, your recording.": "تُحفظ كل جلسة على هذا الجهاز بألوانها، وبتسجيلك إن سمحت.",
+    "Review a session to see your mistakes, hear yourself, or practise the verses you found hard. Repeat sessions can be repeated again.": "راجع جلسة لترى أخطاءك، وتسمع نفسك، أو تتدرب على الآيات الصعبة. ويمكن إعادة جلسات التكرار.",
+    "Pace and language": "الإيقاع واللغة",
+    "⋯ → Pace: any valid pace (default), or practise one of ḥadr, tadwīr or taḥqīq.": "⋯ ← الإيقاع: أي إيقاع صحيح (الافتراضي)، أو تدرّب على الحدر أو التدوير أو التحقيق.",
+    "⋯ → Language: English, Hausa or Arabic. ⋯ → Light / dark.": "⋯ ← اللغة: الإنجليزية أو الهوسا أو العربية. ⋯ ← فاتح / داكن.",
+    "Downloads and offline use": "التنزيلات والاستخدام دون اتصال",
+    "In the phone app and on the website, a reciter's verse is kept on your device the first time it plays. ⋯ → Downloads shows what is kept, and lets you delete it.": "في تطبيق الهاتف وعلى الموقع، تُحفظ آية القارئ على جهازك أول مرة تُشغَّل. ⋯ ← التنزيلات تُظهر المحفوظ وتتيح حذفه.",
+    "On the website, everything works offline after the first visit. You can also install it as an app.": "على الموقع، يعمل كل شيء دون اتصال بعد الزيارة الأولى. ويمكنك أيضًا تثبيته كتطبيق.",
+    "Good to know": "معلومات مهمة",
+    "Everything runs on your device. Nothing you recite is sent anywhere.": "يعمل كل شيء على جهازك. لا يُرسَل شيء مما تقرؤه إلى أي مكان.",
     "Hold the mic for 3 seconds to clear all colours.": "اضغط مطولًا على الميكروفون 3 ثوانٍ لمسح كل الألوان.",
     "All colours cleared": "مُسحت كل الألوان",
     "Strict order": "الترتيب الصارم",
