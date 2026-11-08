@@ -1,6 +1,6 @@
 // Suwayhib in the browser: there is no server. The page's WebSocket and its data requests
 // (/page/12, /verse/2/255, /surahs, ...) are answered by worker.js, which runs the model and
-// web/app's Python engine. Loaded before the app's own scripts.
+// server/app's Python engine. Loaded before the app's own scripts.
 //
 // Reference recitations come from everyayah.com and the service worker keeps each one, so a
 // verse played once plays offline (the Downloads page lists and deletes them). This build keeps

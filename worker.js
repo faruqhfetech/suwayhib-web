@@ -1,7 +1,7 @@
 // Suwayhib in the browser: everything the web server does, in a Web Worker.
 //   - the phoneme model: Quran-Lab's streaming Zipformer, run by sherpa-onnx's WebAssembly
 //     build (sherpa/, the model packed into its .data file by build.py)
-//   - the follow-along engine: web/app's Python (Session, tracker, decoder, api) in Pyodide
+//   - the follow-along engine: server/app's Python (Session, tracker, decoder, api) in Pyodide
 // The page talks to it through bridge.js, which stands in for the server's WebSocket.
 //
 // page -> worker  {t: "audio", buf: Float32Array buffer (16 kHz mono, 100 ms)}
