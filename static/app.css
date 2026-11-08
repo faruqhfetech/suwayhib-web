@@ -124,9 +124,11 @@ body.paged.reading .tabbar { position: static; flex: none; order: 99; }
 .basmala { display: block; text-align: center; }
 .surah { display: block; text-align: center; margin: var(--s2) 0; padding: var(--s1) 0; border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line); font-size: .8em; color: var(--accent); }
-.v { border-radius: var(--r-sm); padding: 2px 0; transition: background .3s; }
-/* translucent: the font's marks reach into the line above, and must show through the tint */
-.v.current { background: rgba(29,92,99,.11); background: color-mix(in srgb, var(--accent) 11%, transparent); }
+.v { border-radius: var(--r-sm); padding: 0; transition: background .3s; }
+/* The font's box is much taller than its line, so a full background overlaps the lines above and
+   below (a doubled band). Paint only the middle of the box: a band that stays within its own line. */
+.v.current { --hl: rgba(29,92,99,.12); background: linear-gradient(transparent 24%, var(--hl) 24%, var(--hl) 80%, transparent 80%);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 0; }
 .w { border-radius: 6px; padding: 0 2px; transition: color .25s, background .25s; cursor: pointer; }
 .w.ok { color: var(--ok); }
 .w.cur { background: var(--cur-bg); box-shadow: inset 0 -2px 0 var(--cur); }
