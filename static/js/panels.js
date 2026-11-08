@@ -206,6 +206,60 @@ $("readopts-btn").onclick = () => {
   if (paged) setTimeout(refitAll, 0);  // the page area changed height
 };
 
+// ---------- downloads: reciter recitations kept on this device ----------
+// The app version provides window.SuwayhibDownloads = { list() -> [{rec, stem, bytes}], remove(rec, stems) }
+// (Android: the app's cache; in-browser: the service worker's cache). The web server keeps none.
+if (window.SuwayhibDownloads) $("downloads").hidden = false;
+function verseRanges(ayat) {  // [1,2,3,5,7,8] -> "1–3, 5, 7–8"
+  const out = []; let a = null, b = null;
+  for (const x of ayat.sort((p, q) => p - q)) {
+    if (b !== null && x === b + 1) { b = x; continue; }
+    if (a !== null) out.push(a === b ? `${a}` : `${a}–${b}`);
+    a = b = x;
+  }
+  if (a !== null) out.push(a === b ? `${a}` : `${a}–${b}`);
+  return out.join(", ");
+}
+const size = (bytes) => bytes < 1e6 ? `${Math.max(1, Math.round(bytes / 1e3))} KB` : `${(bytes / 1e6).toFixed(bytes < 1e7 ? 1 : 0)} MB`;
+async function buildDownloads() {
+  const list = $("dllist"); list.innerHTML = "";
+  const items = await window.SuwayhibDownloads.list();
+  if (!items.length) { list.innerHTML = `<div class="sessempty">${t("Nothing downloaded yet. A reciter's verse is kept here the first time you play it.")}</div>`; return; }
+  const names = Object.fromEntries((await (await fetch("/reciters")).json()).map((r) => [r.id, r.name]));
+  const byRec = {};
+  for (const x of items) {
+    const s = +x.stem.slice(0, 3), a = +x.stem.slice(3);
+    ((byRec[x.rec] ||= { bytes: 0, n: 0, sura: {} }).sura[s] ||= []).push(a);
+    byRec[x.rec].bytes += x.bytes || 0; byRec[x.rec].n++;
+  }
+  for (const [rec, r] of Object.entries(byRec).sort((p, q) => q[1].n - p[1].n)) {
+    const d = document.createElement("div"); d.className = "dlrec";
+    d.innerHTML = `<div class="top"><b>${names[rec] || rec.replace(/_/g, " ")}</b>
+      <span class="meta">${t(r.n === 1 ? "1 verse · {size}" : "{n} verses · {size}", { n: r.n, size: size(r.bytes) })}</span></div>`;
+    const del = document.createElement("button"); del.className = "ghost danger"; del.textContent = t("Delete");
+    del.onclick = async () => {
+      if (!(await ask(t("Delete all of {x}'s downloaded verses?", { x: names[rec] || rec })))) return;
+      await window.SuwayhibDownloads.remove(rec, []); buildDownloads();
+    };
+    d.querySelector(".top").appendChild(del);
+    for (const [s, ayat] of Object.entries(r.sura).sort((p, q) => p[0] - q[0])) {
+      const row = document.createElement("div"); row.className = "dlsura";
+      const su = SURAHS[s - 1];
+      row.innerHTML = `<span class="name"><span class="meta">${s}.</span> <bdi class="ar">${su?.name || ""}</bdi> <span class="meta">${su?.en || ""} · ${t("verses")} ${verseRanges(ayat)}</span></span>`;
+      const x = document.createElement("button"); x.className = "icon-btn ghost";
+      x.setAttribute("aria-label", t("Delete")); x.innerHTML = `<svg class="i"><use href="#i-trash"/></svg>`;
+      x.onclick = async () => {
+        await window.SuwayhibDownloads.remove(rec, ayat.map((a) => String(s).padStart(3, "0") + String(a).padStart(3, "0")));
+        buildDownloads();
+      };
+      row.appendChild(x); d.appendChild(row);
+    }
+    list.appendChild(d);
+  }
+}
+$("downloads").onclick = () => { $("menu").classList.remove("show"); $("dlbox").classList.add("show"); buildDownloads().catch((e) => toast(e.message)); };
+$("dlclose").onclick = closeOverlays;
+
 // ---------- menu ----------
 $("more").onclick = (e) => { e.stopPropagation(); $("menu").classList.toggle("show"); };
 addEventListener("click", (e) => { if (!e.target?.closest?.("#menu")) $("menu").classList.remove("show"); });

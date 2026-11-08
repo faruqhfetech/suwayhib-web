@@ -30,6 +30,7 @@
     <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></symbol>
     <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></symbol>
     <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   </defs>
@@ -69,6 +70,7 @@
   <div class="menurow"><span data-i18n="Language">Language</span> <select id="lang" data-i18n-label="Language" aria-label="Language"><option value="en">English</option><option value="ha">Hausa</option><option value="ar">العربية</option></select></div>
   <div class="menurow"><span data-i18n="Pace">Pace</span> <select id="pace" data-i18n-label="Pace" aria-label="Pace"><option value="any" data-i18n="Any valid pace">Any valid pace</option><option value="hadr" data-i18n="Ḥadr (fast)">Ḥadr (fast)</option><option value="tadwir" data-i18n="Tadwīr (medium)">Tadwīr (medium)</option><option value="tahqiq" data-i18n="Taḥqīq (slow)">Taḥqīq (slow)</option></select></div>
   <button class="ghost" id="theme"><svg class="i"><use href="#i-theme"/></svg><span data-i18n="Light / dark">Light / dark</span></button>
+  <button class="ghost" id="downloads" hidden><svg class="i"><use href="#i-download"/></svg><span data-i18n="Downloads">Downloads</span></button>
   <button class="ghost" id="help"><svg class="i"><use href="#i-help"/></svg><span data-i18n="How it works">How it works</span></button>
   <label class="filebtn ghost" id="filebtn" hidden><svg class="i"><use href="#i-headphones"/></svg><span data-i18n="Play a recording">Play a recording</span><input type="file" id="file" accept="audio/*"></label>
   <span id="demoslot"></span>
@@ -211,6 +213,10 @@
 </div></div>
 
 
+<div class="overlay" id="dlbox"><div class="dialog" role="dialog" data-i18n-label="Downloads" aria-label="Downloads">
+  <div class="head"><b style="flex:1" data-i18n="Downloads">Downloads</b><button class="icon-btn ghost" id="dlclose" data-i18n-label="Close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="list" id="dllist" style="padding: 0 var(--s3)"></div>
+</div></div>
 <div class="reviewbar" id="reviewbar"><span id="reviewtext"></span><button id="reviewplay"><svg class="i"><use href="#i-play"/></svg><span data-i18n="Play session">Play session</span></button><button id="reviewprac" data-i18n="Practise these">Practise these</button><button class="primary" id="reviewexit" data-i18n="Close review">Close review</button></div>
 
 <div class="overlay" id="askbox"><div class="dialog" role="alertdialog"><div class="guide">

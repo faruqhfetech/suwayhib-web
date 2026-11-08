@@ -2,11 +2,13 @@
 // (/page/12, /verse/2/255, /surahs, ...) are answered by worker.js, which runs the model and
 // web/app's Python engine. Loaded before the app's own scripts.
 //
-// This build has no reference recitations (no Listen) and keeps no recordings: the page hides
-// those (window.SUWAYHIB_INWEB, read by the app's scripts). Sessions, colours and Repeat
-// setups are still saved in this browser.
+// Reference recitations come from everyayah.com and the service worker keeps each one, so a
+// verse played once plays offline (the Downloads page lists and deletes them). This build keeps
+// no recordings of the learner (window.SUWAYHIB_NOREC). Sessions, colours and Repeat setups
+// are saved in this browser.
 (() => {
   window.SUWAYHIB_INWEB = true;
+  window.SUWAYHIB_NOREC = true;
   const worker = new Worker("worker.js");
   let sock = null;
   const held = [];  // engine replies that arrive before the page's handler exists
@@ -47,8 +49,10 @@
         worker.postMessage({ t: "req", id, path: url.pathname, query: url.search.slice(1) });
       });
     }
-    if (url.origin === location.origin && /^\/(ref|clip)\//.test(url.pathname))
-      return Promise.resolve(new Response("not in this version", { status: 404 }));  // no reciter audio here
+    const ref = url.origin === location.origin && /^\/ref\/([\w-]+)\/(\d{6})$/.exec(url.pathname);
+    if (ref) return realFetch(`https://everyayah.com/data/${ref[1]}/${ref[2]}.mp3`);  // kept by sw.js
+    if (url.origin === location.origin && /^\/clip\//.test(url.pathname))
+      return Promise.resolve(new Response("not in this version", { status: 404 }));
     return realFetch(input, init);
   };
 
@@ -65,6 +69,28 @@
   };
   worker.onerror = (e) => deliver(JSON.stringify([{ type: "status", text: `Could not start: ${e.message}` }]));
 
+
+  // downloads: the recitations the service worker has kept (sw.js, cache "suwayhib-heavy")
+  const EA = /^https:\/\/everyayah\.com\/data\/([\w-]+)\/(\d{6})\.mp3$/;
+  window.SuwayhibDownloads = {
+    async list() {
+      if (!("caches" in window)) return [];
+      const c = await caches.open("suwayhib-heavy"), out = [];
+      for (const req of await c.keys()) {
+        const m = EA.exec(req.url); if (!m) continue;
+        const r = await c.match(req);
+        out.push({ rec: m[1], stem: m[2], bytes: +(r?.headers.get("content-length") || 0) });
+      }
+      return out;
+    },
+    async remove(rec, stems) {
+      const c = await caches.open("suwayhib-heavy");
+      for (const req of await c.keys()) {
+        const m = EA.exec(req.url);
+        if (m && m[1] === rec && (!stems.length || stems.includes(m[2]))) await c.delete(req);
+      }
+    },
+  };
 
   // installable, and offline after the first visit (sw.js)
   if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));

@@ -207,7 +207,7 @@ async function replayWordsInner(idxs, run) {
   }
   muteSend = false;
 }
-$("plisten").onclick = () => listenTimes(1).then((ok) => { if (ok) pstep("Tap 🎙 My turn when ready."); });
+$("plisten").onclick = () => listenTimes(1).then((ok) => { if (ok) pstep("Tap My turn when ready."); });
 $("pturn").onclick = myTurn;
 $("pstart").onclick = async () => { if (NOREF || await listenTimes(P.reps)) myTurn(); };
 $("pnext2").onclick = () => $("pnext").onclick();

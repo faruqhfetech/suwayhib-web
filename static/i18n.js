@@ -161,6 +161,14 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "Taɓa 🎙 Lokacina idan ka shirya.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "Komai yana faruwa a wannan na'ura; ba a aika karatunka ko'ina, ba a kuma adana shi.",
     "A companion between lessons — not a replacement for your teacher.": "Abokin bita tsakanin darussa — ba madadin malaminka ba.",
+    "1 verse · {size}": "aya 1 · {size}",  // DRAFT: please correct
+    "{n} verses · {size}": "ayoyi {n} · {size}",  // DRAFT: please correct
+    "Tap My turn when ready.": "Taɓa Lokacina idan ka shirya.",  // DRAFT: please correct
+    "Downloads": "Abubuwan da aka sauke",  // DRAFT: please correct
+    "Nothing downloaded yet. A reciter's verse is kept here the first time you play it.": "Babu abin da aka sauke tukuna. Ana ajiye ayar mai karatu a nan a karon farko da ka kunna ta.",  // DRAFT: please correct
+    "{n} verses · {mb} MB": "ayoyi {n} · MB {mb}",  // DRAFT: please correct
+    "Delete all of {x}'s downloaded verses?": "A share duk ayoyin {x} da aka sauke?",  // DRAFT: please correct
+    "verses": "ayoyi",  // DRAFT: please correct
     "The first visit downloads about 90 MB, then it works offline.": "Ziyarar farko tana sauke kusan MB 90, sannan tana aiki ba tare da intanet ba.",  // DRAFT: please correct
     "Starting…": "Ana farawa…",  // DRAFT: please correct
     "Loading Python…": "Ana loda Python…",  // DRAFT: please correct
@@ -294,6 +302,14 @@ const I18N = {
     "Tap 🎙 My turn when ready.": "اضغط 🎙 دوري حين تستعد.",
     "Everything happens on this device; your recitation is never sent anywhere or saved.": "كل شيء يجري على هذا الجهاز؛ لا تُرسل تلاوتك إلى أي مكان ولا تُحفظ.",
     "A companion between lessons — not a replacement for your teacher.": "رفيق بين الدروس — لا يغني عن شيخك.",
+    "1 verse · {size}": "آية واحدة · {size}",
+    "{n} verses · {size}": "{n} آية · {size}",
+    "Tap My turn when ready.": "اضغط دوري حين تستعد.",
+    "Downloads": "التنزيلات",
+    "Nothing downloaded yet. A reciter's verse is kept here the first time you play it.": "لا تنزيلات بعد. تُحفظ آية القارئ هنا أول مرة تشغّلها.",
+    "{n} verses · {mb} MB": "{n} آية · {mb} ميغابايت",
+    "Delete all of {x}'s downloaded verses?": "حذف كل آيات {x} المنزّلة؟",
+    "verses": "الآيات",
     "The first visit downloads about 90 MB, then it works offline.": "تنزّل الزيارة الأولى نحو 90 ميغابايت، ثم يعمل دون إنترنت.",
     "Starting…": "جارٍ البدء…",
     "Loading Python…": "جارٍ تحميل Python…",

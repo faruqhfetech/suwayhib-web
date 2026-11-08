@@ -53,8 +53,9 @@ function toast(x) {
   const el = $("toast"); el.textContent = t(x); el.classList.add("show");
   clearTimeout(toast._t); toast._t = setTimeout(() => el.classList.remove("show"), 2600);
 }
-// the in-browser build (inweb/) has no reference recitations and keeps no recordings
-const NOREF = !!window.SUWAYHIB_INWEB;
+// a build may go without reference recitations (SUWAYHIB_NOREF) or saved recordings
+// (SUWAYHIB_NOREC; the in-browser build keeps none)
+const NOREF = !!window.SUWAYHIB_NOREF;
 let practising = false, repeating = false;  // the Practise or Repeat tab, rather than the mushaf
 const inPanel = () => practising || repeating;
 const root = () => (practising ? $("practice") : repeating ? $("repeat") : $("pages"));
@@ -107,7 +108,7 @@ function archiveSession() {  // the finished session goes into the list (only if
 }
 const AUD = {
   db: null, buf: [], n: 0,  // n: samples recorded in the current session
-  on: !NOREF && store.get("suwayhib.saveaudio", true),
+  on: !NOREF && !window.SUWAYHIB_NOREC && store.get("suwayhib.saveaudio", true),
   open() {
     if (this.db) return Promise.resolve(this.db);
     return new Promise((res, rej) => {

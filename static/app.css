@@ -83,7 +83,7 @@ body.paged.reading .readopts { position: static; flex: none; box-shadow: none; }
 .mcap { color: var(--muted); font-size: 13px; }
 
 /* the menu: app-wide settings */
-.menu { position: absolute; inset-inline-end: var(--s3); top: 60px; background: var(--card); border: 1px solid var(--line);
+.menu { position: fixed; inset-inline-end: var(--s3); top: 60px;  /* fixed: opens in view wherever the page is scrolled */ background: var(--card); border: 1px solid var(--line);
   border-radius: var(--r-lg); box-shadow: var(--shadow); padding: var(--s2); display: none; flex-direction: column; z-index: 20; min-width: 240px; }
 .menu.show { display: flex; }
 .menu button, .menu .filebtn { justify-content: flex-start; text-align: start; }
@@ -298,10 +298,19 @@ button.danger { color: var(--err); }
 #boot .bh { color: var(--muted); font-size: 13px; max-width: 320px; }
 #boot.failed .bbar { display: none; } #boot.failed .bt { color: var(--err); }
 
-/* the in-browser build (inweb/): no reference recitations, no recordings */
-body.inweb #listen, body.inweb #mine, body.inweb #reviewplay, body.inweb #plisten, body.inweb #pturn,
-body.inweb .switch, body.inweb .optrow:has(#preciter), body.inweb .optrow:has(#preps) { display: none !important; }
-body.inweb .row2:has(#pturn) { grid-template-columns: 1fr; }
+/* the in-browser build (inweb/) keeps no recordings */
+body.inweb #mine, body.inweb #reviewplay, body.inweb .switch { display: none !important; }
+
+/* downloads: the reciter recitations kept on this device (Android, in-browser) */
+.dlrec { padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
+.dlrec:last-child { border-bottom: 0; }
+.dlrec .top { display: flex; align-items: center; gap: var(--s2); }
+.dlrec .top b { flex: 1; }
+.dlrec .meta, .dlsura .meta { color: var(--muted); font-size: 14px; }
+.dlsura { display: flex; align-items: center; gap: var(--s2); padding: var(--s1) 0 var(--s1) var(--s3); }
+.dlsura .name { flex: 1; min-width: 0; }
+.dlsura .ar { font-family: var(--quran); font-size: 18px; }
+.dlsura button { min-height: 40px; min-width: 40px; }
 
 @media (max-width: 560px) {
   .menu { position: fixed; left: 0; right: 0; top: auto; bottom: 0; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 75dvh; overflow-y: auto;
