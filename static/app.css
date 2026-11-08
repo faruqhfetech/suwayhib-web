@@ -11,7 +11,9 @@
   --ok: #2f7d4f; --ok-bg: #e5f2ea; --err: #b3261e; --err-bg: #fbe3e1; --cur: #2c6bc9; --cur-bg: #e3edfb;
   --slight: #7a4a00; --slight-bg: #fbeed5;
   --shadow: 0 1px 2px rgba(0,0,0,.06), 0 6px 24px rgba(0,0,0,.06);
-  --quran: "Amiri Quran", "Amiri", "KFGQPC Uthmanic Script HAFS", "Scheherazade New", "Traditional Arabic", "Noto Naskh Arabic", serif;
+  /* the Qur'an text: Amiri Quran, bundled (fonts/, SIL Open Font License), made for the Uthmani text: lam-alif
+     and the small Qur'anic marks render as in the mushaf on every device, offline too */
+  --quran: "Suwayhib Quran", "Amiri Quran", "KFGQPC Uthmanic Script HAFS", "Scheherazade New", "Noto Naskh Arabic", serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -29,6 +31,7 @@
   --slight: #e8b85a; --slight-bg: #3a2f17;
   --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 24px rgba(0,0,0,.3);
 }
+@font-face { font-family: "Suwayhib Quran"; src: url("fonts/AmiriQuran.woff2") format("woff2"); font-display: block; }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
@@ -188,7 +191,7 @@ body.insessions #sessions { display: block; }
   padding: var(--s4); display: grid; gap: var(--s3); }
 .phead { display: flex; align-items: center; gap: var(--s2); direction: ltr; }
 .ptitle { flex: 1; text-align: center; }
-.ptitle-ar { font-family: "Amiri", "Noto Naskh Arabic", serif; font-size: 22px; color: var(--accent); direction: rtl; }
+.ptitle-ar { font-family: var(--quran); font-size: 22px; color: var(--accent); direction: rtl; }
 .pmeta { color: var(--muted); font-size: 14px; }
 #pverse, #rverse { font-size: clamp(26px, 6.5vw, 36px); line-height: 2.2; text-align-last: center; }
 #rverse:empty { display: none; }
@@ -230,12 +233,12 @@ details.opts > .optrow { margin: var(--s2) 0; }
 .dialog .list { overflow-y: auto; padding: var(--s2); }
 .dialog .item { display: flex; width: 100%; justify-content: space-between; background: none; text-align: start; gap: var(--s3); }
 .dialog .item:hover { background: var(--surface-2); }
-.dialog .item .ar { font-family: "Amiri", "Noto Naskh Arabic", serif; font-size: 20px; }
+.dialog .item .ar { font-family: var(--quran); font-size: 20px; }
 .dialog .item .meta { color: var(--muted); font-size: 14px; }
 .dialog .item .en { flex: 1; color: var(--ink); }
 .tabs { padding: var(--s3) var(--s3) 0; }
 .vstep { padding: var(--s3) var(--s4) var(--s4); }
-.vtitle { margin: var(--s1) 0 var(--s3); } .vtitle .ar { font-family: "Amiri", "Noto Naskh Arabic", serif; font-size: 24px; }
+.vtitle { margin: var(--s1) 0 var(--s3); } .vtitle .ar { font-family: var(--quran); font-size: 24px; }
 .vtitle .meta, .vrow .meta { color: var(--muted); }
 .vrow { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s3); }
 .vrow input { width: 110px; }

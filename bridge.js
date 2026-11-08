@@ -36,7 +36,6 @@
   // ---------- data requests ----------
   const API = /^\/(page|verse|surahs|juz|reciters|timing)(\/|$)/;
   const waiting = new Map();
-  let started = false;
   let nextId = 1;
   const realFetch = window.fetch.bind(window);
   window.fetch = (input, init) => {
@@ -56,15 +55,6 @@
   worker.onmessage = (ev) => {
     const m = ev.data;
     if (m.t === "msgs") {
-      // the engine is ready: lift the cover, and load the pages in view again (the mushaf
-      // asks for its first pages while the engine is still starting, and those can be lost)
-      if (!started && m.json.includes("Ready.")) {
-        started = true;
-        setTimeout(() => {
-          try { if (typeof observe === "function") observe(); if (typeof goPage === "function") goPage(currentPage()); }
-          catch (e) { console.error(e); }
-        }, 0);
-      }
       try { deliver(m.json); } catch (e) { console.error(e); }
     }
     else if (m.t === "resp") {

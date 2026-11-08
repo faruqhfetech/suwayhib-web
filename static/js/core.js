@@ -35,7 +35,13 @@ const BOOT_STEPS = [["Preparing", 0.05], ["Loading Python", 0.05], ["Downloading
 let bootAt = 0;
 function bootStatus(x) {
   const b = $("boot"); if (!b || b.classList.contains("done")) return;
-  if (/^Ready\. /.test(x)) { b.classList.add("done"); setTimeout(() => b.remove(), 400); return; }
+  if (/^Ready\. /.test(x)) {
+    b.classList.add("done"); setTimeout(() => b.remove(), 400);
+    // pages asked for while the engine was still starting (Android, in-browser) can come back
+    // empty: now it is ready, load the ones in view again
+    setTimeout(() => { observe(); goPage(currentPage()); }, 0);
+    return;
+  }
   b.classList.toggle("failed", /^Could not start/.test(x));
   for (const [k, v] of BOOT_STEPS) if (x.startsWith(k)) bootAt = Math.max(bootAt, v);
   const pct = /(\d+)%/.exec(x);

@@ -144,6 +144,8 @@ function fitPage(pg) {
   fitCache[key] = lo;
 }
 function refitAll() { document.querySelectorAll(".page.loaded").forEach(fitPage); }
+// page sizes are measured: measure again once the Qur'an font has loaded
+document.fonts?.ready.then(() => { for (const k in fitCache) delete fitCache[k]; refitAll(); });
 let fitT = null;
 addEventListener("resize", () => { clearTimeout(fitT); fitT = setTimeout(() => { const n = currentPage(); refitAll(); if (paged) goPage(n); }, 150); });
 
