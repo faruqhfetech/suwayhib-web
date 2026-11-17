@@ -145,7 +145,6 @@ body.paged.reading .tabbar { position: static; flex: none; order: 99; }
 @keyframes flash { 0%,100% { background: transparent; } 30% { background: var(--cur-bg); } }
 .num { font-size: .62em; color: var(--muted); margin: -12px -2px; padding: 12px 6px; white-space: nowrap; cursor: pointer; }
 .num.done { color: var(--ok); }
-.num.done::after { content: " ✓"; font-size: .9em; }
 .rep { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); vertical-align: super; margin-inline-start: 2px; }
 
 /* --- Read's bottom bar: page arrows either side of the mic --- */
