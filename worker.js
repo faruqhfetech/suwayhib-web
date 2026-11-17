@@ -58,18 +58,18 @@ function makeRecognizer() {
     ruleFsts: "", ruleFars: "",
   });
 }
-function drain(s) { while (rec.isReady(s)) rec.decode(s); }
+function drain(s) { let k = 0; while (rec.isReady(s)) { rec.decode(s); k++; } return k; }
 
 // called from Python (zipformer_decoder's backend, in engine.py)
 self.zfReset = () => { stream?.free(); stream = rec.createStream(); emitted = 0; };
 // the live stream: newly emitted units [[time_s, unit], ...] as JSON
 function zfAccept(x) {
   stream.acceptWaveform(SR, x);
-  drain(stream);
+  const runs = drain(stream);  // times the model ran: the decoder treats its output as final from there
   const r = rec.getResult(stream), out = [];
   for (let i = emitted; i < r.tokens.length; i++) out.push([r.timestamps[i], r.tokens[i]]);
   emitted = r.tokens.length;
-  return JSON.stringify(out);
+  return JSON.stringify({ runs, units: out });
 }
 // a standalone clip (not part of the live stream): its phonemes
 self.zfDecode = (bytes) => {

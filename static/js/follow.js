@@ -10,6 +10,11 @@ function handle(m) {
       for (const w of m.words) { const el = wsel(m.sura, m.aya, w); if (el && !el.matches(".ok, .err, .slight")) el.classList.add("heard"); }
       break;
     case "skipped": showSkipped(m); break;
+    case "prov":  // heard and fitting, not yet judged: light green until the final colour
+      if (practising && (m.sura !== P.s || m.aya !== P.a)) break;
+      if (repeating && !repeatOwns(m)) break;
+      for (const w of m.words) { const el = wsel(m.sura, m.aya, w); if (el && !el.matches(".ok, .err, .slight")) el.classList.add("prov"); }
+      break;
     case "hold": {  // strict order: this word first
       root().querySelectorAll(".w.need").forEach((x) => x.classList.remove("need"));
       const el = wsel(m.sura, m.aya, m.word);
@@ -28,7 +33,7 @@ function handle(m) {
       const cls = m.status === "error" ? "err" : m.status === "slight" ? "slight" : "ok";
       for (const w of words(m)) {
         const el = wsel(m.sura, m.aya, w);
-        if (el) { el.classList.remove("err", "slight", "ok", "cur", "heard", "miss"); el.classList.add(cls); if (m.skipped) el.classList.add("miss"); }
+        if (el) { el.classList.remove("err", "slight", "ok", "cur", "heard", "miss", "prov"); el.classList.add(cls); if (m.skipped) el.classList.add("miss"); }
         mark(m.sura, m.aya, w, m.status, m);
         if (practising) { const d = $("pdots").children[w]; if (d) d.className = cls; }
       }
@@ -45,7 +50,7 @@ function handle(m) {
       if (same && (+cur.dataset.w < m.word || +cur.dataset.w - m.word <= 1)) { setCursor(m.sura, m.aya, m.word); break; }
       // went back: un-mark what is being re-recited, flash where it picks up again
       root().querySelectorAll(`.w[data-s="${m.sura}"][data-a="${m.aya}"]`).forEach((el) => {
-        if (+el.dataset.w >= m.word) { el.classList.remove("ok", "err", "slight"); mark(m.sura, m.aya, +el.dataset.w, null); }
+        if (+el.dataset.w >= m.word) { el.classList.remove("ok", "err", "slight", "prov"); mark(m.sura, m.aya, +el.dataset.w, null); }
       });
       const el = wsel(m.sura, m.aya, m.word);
       if (el) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
@@ -69,7 +74,8 @@ function handle(m) {
     case "lost":
       if (practising) { practiceWrongVerse(); break; }
       if (repeating) { repeatLost(); break; }
-      root().querySelectorAll(".w.cur").forEach((e) => e.classList.remove("cur")); verse = null; break;
+      root().querySelectorAll(".w.cur").forEach((e) => e.classList.remove("cur"));
+      root().querySelectorAll(".w.prov").forEach((e) => e.classList.remove("prov")); verse = null; break;
     case "lag": if (DEV) { $("lag").textContent = `${m.ms} ms`; setTimeout(() => ($("lag").textContent = ""), 2000); } break;
   }
 }

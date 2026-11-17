@@ -276,7 +276,7 @@ addEventListener("click", (e) => { if (!e.target?.closest?.("#menu")) $("menu").
 // clear all colours: hold the mic for 3 seconds (audio.js); holding that long is the confirmation
 function clearAllColours() {
   send({ type: "reset" }); hideSheet(); verse = null;
-  document.querySelectorAll(".w").forEach((x) => x.classList.remove("ok", "err", "slight", "cur", "heard", "miss", "need"));
+  document.querySelectorAll(".w").forEach((x) => x.classList.remove("ok", "err", "slight", "cur", "heard", "miss", "need", "prov"));
   root().querySelectorAll(".v.current").forEach((x) => x.classList.remove("current"));
   document.querySelectorAll(".num.done").forEach((x) => x.classList.remove("done"));
   for (const k in flagged) delete flagged[k];

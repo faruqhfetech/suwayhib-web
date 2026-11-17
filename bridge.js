@@ -22,7 +22,9 @@
     send(d) {
       if (this.readyState !== 1) return;
       if (typeof d === "string") worker.postMessage({ t: "cmd", json: d });
-      else { const b = d instanceof ArrayBuffer ? d : d.buffer; worker.postMessage({ t: "audio", buf: b }, [b]); }
+      // a copy is sent: transferring the page's own buffer would empty it, and the page still
+      // holds the chunk (the session's recording, the Practise take)
+      else { const b = (d instanceof ArrayBuffer ? d : d.buffer).slice(0); worker.postMessage({ t: "audio", buf: b }, [b]); }
     }
     close() { this.readyState = 3; }
   }

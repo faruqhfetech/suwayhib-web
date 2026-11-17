@@ -338,6 +338,8 @@ button.danger { color: var(--err); }
 
 /* heard before the place was found: followed, not judged */
 .w.heard { color: var(--ok); opacity: .6; }
+/* heard and fitting, final colour still to come (a skipped word is taken back to red) */
+.w.prov { color: var(--ok); opacity: .6; transition: color .15s, opacity .15s; }
 /* skipped: never said (red, with a dashed line instead of the wavy one) */
 .w.err.miss { text-decoration: underline dashed var(--err); text-decoration-thickness: 2px; text-underline-offset: 7px; background: none; }
 /* strict order: the word to go back to */
